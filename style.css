@@ -1,0 +1,239 @@
+* {
+	box-sizing: border-box;
+	outline: none;
+}
+html {height:100%;}
+body {
+	position: relative;
+	min-height:100%;
+	background-image: url(https://habboemotion.com/resources/images/homebgs/nl_green_bg.gif);
+	margin: 0;
+	font-family: Sans-serif;
+	padding-top: 10px;
+	padding-bottom: 3em;
+}
+h1, main {
+	filter: drop-shadow(3px 3px 3px rgba(0,0,0,.6));
+}
+h1 {
+	margin-top: 0;
+	text-align: center;
+	color: white;
+}
+main {
+	background-image: linear-gradient(0deg, #eee, white);
+	margin: 0 auto;
+	border-radius: 4px;
+	padding: 15px;
+	max-width: 778px;
+	text-align: center;
+	overflow: auto;
+}
+@media screen and ( max-width: 808px ){
+    main {
+        margin: 0 15px;
+    }
+}
+
+
+details {
+	text-align: left;
+	margin-bottom: 20px;
+	line-height: 1.5em;
+	transition: all .4s;
+}
+details[open] {
+	border-bottom: 1px solid #bbb;
+}
+details summary {
+	cursor: pointer;
+	display: inline-block;
+	text-align: left;
+}
+details .details-body {
+	animation: sweep 0.5s ease-in-out;
+	text-align: center;
+}
+@keyframes sweep {
+	0%    {opacity: 0; transform: translateX(-10px);}
+	100%  {opacity: 1; transform: translateX(0);}
+}
+details .details-body p {
+	text-align: justify;
+	text-indent: 4em;
+}
+details .details-body p:first-line {
+}
+details tr td:first-child {
+	text-align: right;
+}
+details tr td:not(:first-child) {
+	text-align: left;
+}
+input[type="button"] {
+	cursor: pointer;
+	background: #4a731f;
+	background-image: linear-gradient(to bottom, #4a731f, #4d6f29);
+	border-radius: 4px;
+	color: #ffffff;
+	font-size: 15px;
+	padding: 4px 8px 4px 8px;
+	text-decoration: none;
+	border: 0;
+	margin: 3px;
+	transition: background .4s;
+}
+.btn-1 {
+	filter: hue-rotate(90deg);
+}
+.btn-2 {
+	filter: hue-rotate(180deg);
+}
+.btn-3 {
+	filter: hue-rotate(270deg);
+}
+
+input[type="button"]:hover {
+	background: #264e00;
+	background-image: linear-gradient(to bottom, #264e00, #1c3800);
+	text-decoration: none;
+}
+#calc {
+	margin: 5px auto;
+}
+#clean {
+	filter: hue-rotate(300deg);
+	font-size: 7pt;
+}
+#qtdSelect {
+	display: block;
+}
+#qtdCompleted {
+	display: block;
+	text-align: right;
+	margin: 0 -10px;
+	font-size: .7em;
+}
+
+progress:not(value) {
+    /* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
+}
+progress {
+    /* Get rid of the default appearance */
+    appearance: none;
+    
+    /* This unfortunately leaves a trail of border behind in Firefox and Opera. We can remove that by setting the border to none. */
+    border: none;
+    
+    /* Add dimensions */
+    width: calc(100% + 30px); height: 20px;
+    
+    /* Although firefox doesn't provide any additional pseudo class to style the progress element container, any style applied here works on the container. */
+      background-color: whiteSmoke;
+      box-shadow: 0 2px 1px rgba(0,0,0,.2) inset;
+    
+    /* Of all IE, only IE10 supports progress element that too partially. It only allows to change the background-color of the progress value using the 'color' attribute. */
+    color: royalblue;
+	margin: 0 -15px 15px -15px;;
+    position: relative;
+}
+
+/*
+Webkit browsers provide two pseudo classes that can be use to style HTML5 progress element.
+-webkit-progress-bar -> To style the progress element container
+-webkit-progress-value -> To style the progress element value.
+*/
+
+progress[value]::-webkit-progress-bar {
+    background-color: whiteSmoke;
+    box-shadow: 0 2px 3px rgba(0,0,0,.2) inset;
+}
+
+progress[value]::-webkit-progress-value {
+    position: relative;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    
+    /* Let's animate this */
+
+}
+
+@keyframes animate-stripes {
+	0% { background-position: -100px 0; }
+	100% { background-position: 0px 0; }
+}
+
+
+
+progress::-webkit-progress-value {
+	    animation: animate-stripes 5s linear infinite;
+    /* Gradient background with Stripes */
+    background-image: -webkit-linear-gradient( 135deg, transparent, transparent 33%, rgba(0,0,0,.1) 33%, rgba(0,0,0,.1) 66%, transparent 66%),
+					  -webkit-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0,0,0,.2)),
+     				  -webkit-linear-gradient( left, #305112, #6c9833);
+}
+
+/* Let's spice up things little bit by using pseudo elements. */
+
+progress[value]::-webkit-progress-value:after {
+    /* Only webkit/blink browsers understand pseudo elements on pseudo classes. A rare phenomenon! */
+    content: '';
+    position: absolute;
+    
+    width:5px; height:5px;
+    top:7px; right:7px;
+    
+    background-color: white;
+}
+
+/* Firefox provides a single pseudo class to style the progress element value and not for container. -moz-progress-bar */
+
+progress[value]::-moz-progress-bar {
+    /* Gradient background with Stripes */
+    background-image: -moz-linear-gradient( 135deg, transparent, transparent 33%, rgba(0,0,0,.1) 33%, rgba(0,0,0,.1) 66%, transparent 66%),
+    				  -moz-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0,0,0,.2)),
+     				  -moz-linear-gradient( left, #09c, #f44);
+    
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    
+    /* Firefox doesn't support CSS3 keyframe animations on progress element. Hence, we did not include animate-stripes in this code block */
+}
+
+.container {
+	max-width: 100%;
+	overflow: auto;
+}
+#font, #result {
+	appearance: div;
+	font-family: Consolas;
+	font-size: 13pt;
+	line-height: 1em;
+	border: 1px solid #6c9833;
+	display: inline-block;
+	min-width: 1em;
+	min-height: 1em;
+	width: auto;
+	height: auto;
+	vertical-align: top;
+	text-align: left;
+}
+#font {
+	border-style: dotted;
+}
+#result {
+	pointer-events: none;
+}
+
+footer {
+	position: absolute;
+	left: 0; bottom: 0;
+	
+	width: 100%; min-height: 3em;
+	
+	background-color: rgba(20,20,20,.9);
+	color: #888;
+	
+	text-align: center;
+	padding: 5px;
+	padding-top: 15px;
+	font-size: .7em;
+}
