@@ -83,21 +83,22 @@ document.querySelector("#clean").addEventListener("click", function() {
 
 document.querySelector("#font").addEventListener("input", loadinfos);
 		
-console.log(document.querySelector('script#main-Worker'))
+/*console.log(document.querySelector('script#main-Worker'))
 var blob = new Blob(
 	Array.prototype.map.call(
 		document.querySelectorAll('script[type="text\/js-worker"]#main-Worker'),
 		function (oScript) { return oScript.textContent; }
 	),
 	{ type: 'text/javascript' }
-);
+);*/
 
-var myWorker = new Worker(window.URL.createObjectURL(blob));
+//var myWorker = new Worker(window.URL.createObjectURL(blob));
+var myWorker = new Worker("main-worker.js");
 
 function loadinfos(){
 	// console.clear();
 	myWorker.terminate();
-	myWorker = new Worker(window.URL.createObjectURL(blob));
+	myWorker = new Worker("main-worker.js");
 	document.querySelector("#qtdSelect").innerHTML = "";
 	document.querySelector("#calc").setAttribute("value", "Calcular");
 	
