@@ -161,7 +161,7 @@ function loadinfos(){
 	if (calcule && window.Worker) {
 		calcule = false;
 		
-		myWorker.postMessage(fonte);
+		myWorker.postMessage(window.Worker, fonte);
 		console.log(5, fonte);
 		
 		myWorker.onmessage = function(e) {

@@ -1,7 +1,8 @@
 self.onmessage = function(e) {
 	console.clear();
 	console.groupCollapsed("%cThe worker", "font-weight: bolder; font-size: 3em");
-	var fonte = e.data;
+	var Worker = e.data[0];
+	var fonte = e.data[1];
 
 	// Função simples para calcular o valor de fatoriais
 	function fact(n) {
@@ -32,7 +33,7 @@ self.onmessage = function(e) {
 
 
 
-		subWorker.postMessage(fonte, descobertosOrig);
+		subWorker.postMessage(Worker, fonte, descobertosOrig);
 
 		myWorker.onmessage = function(e) {
 			fonte = e.data[0];

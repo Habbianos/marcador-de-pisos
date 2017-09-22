@@ -151,8 +151,9 @@ function cobreSelec(escolhido) {
 }
 
 self.onmessage = function(e) {
-	var fonte = e.data[0];
-	var descobertosOrig = e.data[1];
+	var Worker = e.data[0];
+	var fonte = e.data[1];
+	var descobertosOrig = e.data[2];
 
 	for (var i = 0; i < fonte.length; i++)
 		for (var j = 0; j < fonte[i].length; j++)
