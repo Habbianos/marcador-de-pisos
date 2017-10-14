@@ -40,45 +40,43 @@ function Population(p, m, num) {
 	}
 	this.calcFitness();
 
-	// Generate a mating pool
-	this.naturalSelection = function() {
-		// Clear the ArrayList
-		this.matingPool = [];
-
-		let maxFitness = 0;
-		for (let i = 0; i < this.population.length; i++) {
-			if (this.population[i].fitness > maxFitness) {
-				maxFitness = this.population[i].fitness;
-			}
-		}
-
-		// Based on fitness, each member will get added to the mating pool a certain number of times
-		// a higher fitness = more entries to mating pool = more likely to be picked as a parent
-		// a lower fitness = fewer entries to mating pool = less likely to be picked as a parent
-		for (let i = 0; i < this.population.length; i++) {
-			
-			let fitness = map(this.population[i].fitness,0,maxFitness,0,1);
-			let n = floor(fitness * 100);  // Arbitrary multiplier, we can also use monte carlo method
-			for (let j = 0; j < n; j++) {              // and pick two random numbers
-				this.matingPool.push(this.population[i]);
-			}
-
-		}
-	}
-
 	// Create a new generation
 	this.generate = function() {
-		// Refill the population with children from the mating pool
+
+		// Calculate the probabilits of all elements
+		let sumFitness = 0;
 		for (let i = 0; i < this.population.length; i++) {
-			let a = floor(random(this.matingPool.length));
-			let b = floor(random(this.matingPool.length));
-			let partnerA = this.matingPool[a];
-			let partnerB = this.matingPool[b];
+			sumFitness += this.population[i].fitness;
+		}
+		for (let i = 0; i < this.population.length; i++) {
+			this.population[i].prob = this.population[i].fitness / sumFitness;
+		}
+
+		// Generate the children
+		let newPopulation = [];
+		for (let i = 0; i < this.population.length; i++) {
+			let partnerA = this.pickOne();
+			let partnerB = this.pickOne();
 			let child = partnerA.crossover(partnerB);
 			child.mutate(this.mutationRate);
-			this.population[i] = child;
+			newPopulation.push(child);
 		}
+		this.population = newPopulation;
+
+
 		this.generations++;
+	}
+
+	this.pickOne = function() {
+		let index = 0;
+		let r = random(1);
+
+		while (r > 0) {
+			r -= this.population[index].prob;
+			index++;
+		}
+		index--;
+		return this.population[index];
 	}
 
 
