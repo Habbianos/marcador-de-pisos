@@ -56,10 +56,10 @@ function setup() {
 	
 	//createCanvas(640, 360);
 	//target = "To be or not to be.";
-	font = [
+	/*font = [
 		['c', 'b', 'c', 'c', 'c'],
 		['c', 'c', 'c', 'b', 'c']
-	];
+	];*/
 	font = [
 		['a', 'a', 'a', 'a', 'a', 'a', 'a'],
 		['a', 'b', 'c', 'c', 'b', 'c', 'a'],

@@ -54,7 +54,8 @@ function DNA(lines, cols) {
 		//console.log(this.genes, '\ns: ', select, '\nc:', covereds, '\nu:', useless);
 
 
-		this.fitness = score * (font.length * font[0].length);
+		this.fitness = score / (font.length * font[0].length);
+		this.fitness = pow(this.fitness, 4);
 	}
 
 	this.calcSelect = function() {
