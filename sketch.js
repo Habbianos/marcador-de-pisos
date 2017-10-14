@@ -151,7 +151,7 @@ function displayInfo() {
 	bestPhrase.html("Best phrase:<br>\t" + answer +
 					"<br>Record:<br>\t" + population.everRecord +
 					"<br>Select:<br>\t" + population.everRecordSelect +
-					"<br>Covereds:<br>\t" + population.everRecordCovereds + " OF " + wantCovered;
+					"<br>Covereds:<br>\t" + population.everRecordCovereds + " OF " + wantCovered);
 	
 	var statstext = "total generations:     " + population.getGenerations() + "<br>";
 	statstext +=    "average fitness:       " + nf(population.getAverageFitness()) + "<br>";
