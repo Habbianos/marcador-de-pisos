@@ -40,6 +40,8 @@ var bestPhrase;
 var allPhrases;
 var stats;
 
+let wantCovered = 0;
+
 function setup() {
 	//frameRate(1);
 	bestPhrase = createP("Best phrase:");
@@ -96,6 +98,14 @@ function setup() {
 		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
 	];
 	area = calcArea();
+	for (let i = 0; i < font.length; i++) {
+		for (let j = 0; j < font[0].length; j++) {
+			if (font[i][j] == 'c')
+				wantCovered++;
+		}
+	}
+
+
 	popmax = 200;
 	mutationRate = 0.01;
 
@@ -141,8 +151,7 @@ function displayInfo() {
 	bestPhrase.html("Best phrase:<br>\t" + answer +
 					"<br>Record:<br>\t" + population.everRecord +
 					"<br>Select:<br>\t" + population.everRecordSelect +
-					"<br>Covereds:<br>\t" + population.everRecordCovereds +
-					"<br>Useless:<br>\t" + population.everRecordUseless);
+					"<br>Covereds:<br>\t" + population.everRecordCovereds + " OF " + wantCovered;
 	
 	var statstext = "total generations:     " + population.getGenerations() + "<br>";
 	statstext +=    "average fitness:       " + nf(population.getAverageFitness()) + "<br>";

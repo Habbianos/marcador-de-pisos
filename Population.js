@@ -35,6 +35,7 @@ function Population(p, m, num) {
 	// Fill our fitness array with a value for every member of the population
 	this.calcFitness = function() {
 		for (let i = 0; i < this.population.length; i++) {
+			this.population[i].reduceUseless();
 			this.population[i].calcFitness(font);
 		}
 	}
@@ -100,7 +101,7 @@ function Population(p, m, num) {
 			this.everRecord = worldrecord;
 			this.everRecordSelect = this.population[index].calcSelect();
 			this.everRecordCovereds = this.population[index].calcCovereds();
-			this.everRecordUseless = this.population[index].calcUseless();
+			this.everRecordUseless = 0;//this.population[index].calcUseless();
 
 			this.limitGenerations += this.generations + this.searchSteps;
 		}

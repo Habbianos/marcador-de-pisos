@@ -41,17 +41,11 @@ function DNA(lines, cols) {
 
 		// Contagem de quantos foram selecionados (quando menos, melhor)(+10/x)
 		let select = this.calcSelect();
-		score += 10/(select+1);
+		score += 10/pow((select+1), 4);
 
 		// Contagem de quantos foram cobertos (necessariamente todos do estado 'c')(+10x)
 		let covereds = this.calcCovereds();
-		score += 10*covereds;
-
-		// Contagem de quantos são inúteis, ambíguos (quando menos, melhor)(+5/x)
-		let useless = this.calcUseless();
-		score += 5/(useless+1);
-
-		//console.log(this.genes, '\ns: ', select, '\nc:', covereds, '\nu:', useless);
+		score += 10*pow(covereds, 4);
 
 
 		this.fitness = score / (font.length * font[0].length);
@@ -103,9 +97,7 @@ function DNA(lines, cols) {
 		return qtd;
 	}
 
-	this.calcUseless = function() {
-		let qtd = 0;
-
+	this.reduceUseless = function() {
 		for (let i = 0; i < this.genes.length; i++) {
 			for (let j = 0; j < this.genes[0].length; j++) {
 				if (this.genes[i][j] == 1) {
@@ -124,15 +116,11 @@ function DNA(lines, cols) {
 							
 						
 					} 
-					if (useless)
-						qtd++;
-
-					this.genes[i][j] = 1;
+					if (!useless)
+						this.genes[i][j] = 1;
 				}
 			}
 		}
-
-		return qtd;
 	}
 
 	// Crossover
@@ -162,7 +150,6 @@ function DNA(lines, cols) {
 			for (let j = 0; j < this.genes[0].length; j++) {
 				if (this.genes[i][j] != -1 && random(1) < mutationRate) {
 					this.genes[i][j] = newState();
-					//console.log(i, j, '\n', this.genes[i][j], '\n', this.genes)
 				}
 			}
 		}
