@@ -15,25 +15,6 @@
 		<link rel="stylesheet" href="style.css" media="all">
 	</head>
 	<body>
-		<script>
-			function teste(n) {
-				let obj = document.querySelector("#font");
-				if (n == 1) {
-					obj.innerHTML = "◫◪◫◫◫<br>◫◫◫◪◫";
-				} else if (n == 2) {
-					obj.innerHTML = "▩▩▩▩▩▩▩<br>▩◪◫◫◪◫▩<br>▩◫◫◫◫◫▩<br>▩▩▩◫▩▩▩<br>▩◫◪◫▩<br>▩▩▩▩▩";
-				} else if (n == 3) {
-					obj.innerHTML = "▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩<br>▩◫▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩<br>▩◫▩▩▩▩▩◫◪▩◫◪▩▩▩◪◪▩▩◪◪▩▩<br>▩◫▩▩▩▩▩◫▩▩◫▩▩▩▩◫▩▩▩◫▩▩▩<br>▩▩▩▩▩▩◫◫◫◫◫◫▩▩▩◫▩▩▩◫▩▩▩<br>▩▩▩▩▩◫◫◫◫◫◫◫◫▩◫◫◫▩◫◫◫▩▩<br>▩▩◪▩▩◪◫◫◫◫◫◫◪▩◫◫◫▩◫◫◫▩▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫◪◫◫◫◪▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫◪◫◫◫◪▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫▩◫◫◫▩▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫▩◫◫◫▩▩<br>▩▩▩▩▩▩◫◫◫◫◫◫▩▩◫◫◫▩◫◫◫▩▩<br>▩▩▩▩▩▩▩▩◫◫▩▩▩◫◫◫◫◫◫◫◫▩▩▩▩<br>▩◪◪◪◪◪◫◫◫◫◫◫◫◫◫▩▩▩▩▩▩▩▩▩▩<br>▩▩▩▩▩▩◫◫◫◫◫◫◫◫◫▩◫◫◫◫◫◪▩▩▩<br>▩◪◪◪◪◪◫◫◫◫◫◫◫◫◫◫◫▩◫▩◫◫▩▩▩<br>▩▩▩▩▩▩▩▩◫▩▩▩▩▩◫◫◫▩◫▩◫◫◫◫▩<br>▩▩▩▩▩▩◫◫◫◫◫▩▩▩◫▩◫◫◫◫◫◫▩◪▩<br>▩▩◫▩▩▩◫◫◫◫◫▩▩▩◫▩▩▩▩▩▩▩▩▩▩<br>▩▩◫▩▩◪◪◫◫◫◪◪▩▩◫▩◫◫◫◫◫◫▩▩▩<br>▩▩◫▩▩▩◫◫◫◫◫▩▩▩◫◫◫▩◫▩◫◫▩▩▩<br>▩▩◫▩▩▩▩◫▩◫▩▩▩▩◫◫◫▩◫▩◫◫◫◫▩<br>▩▩◪▩▩▩▩◫▩◫▩▩▩▩▩▩◫◫◫◫◫◪▩◪▩<br>▩▩▩▩▩▩◫◫▩◫◫▩▩▩▩▩▩▩▩▩▩▩▩▩▩<br>▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩";
-				}
-				loadinfos();
-				document.querySelector("#calc").setAttribute("value", "Calcular");
-
-				document.querySelector("#qtdSelect").innerHTML = "";
-				document.querySelector("#qtdCompleted").innerHTML = "";
-				document.querySelector("progress").removeAttribute("value");
-				myWorker.terminate();
-			}
-		</script>
 		<header>
 			<h1>Marcador de pisos</h1>
 		</header>
@@ -54,13 +35,8 @@
 							</tr>
 						</tbody>
 					</table>
-					<input type="button" class="btn-1" value="Exemplo 1" onclick="teste(1)"/><input type="button" class="btn-2" value="Exemplo 2" onclick="teste(2)"/><input type="button" class="btn-3" value="Exemplo 3" onclick="teste(3)"/>
 				</div>
 			</details>
-			<input id="calc" type="button" value="Calcular"><input id="clean" type="button" value="Limpar">
-			<span id="qtdSelect"></span>
-			<span id="qtdCompleted"></span>
-			<progress max="100"></progress>
 			<div class="container"><div id="font" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable></div></div>
 		</main>
 		<footer>
