@@ -60,13 +60,40 @@ function setup() {
 		['c', 'b', 'c', 'c', 'c'],
 		['c', 'c', 'c', 'b', 'c']
 	];*/
-	font = [
+	/*font = [
 		['a', 'a', 'a', 'a', 'a', 'a', 'a'],
 		['a', 'b', 'c', 'c', 'b', 'c', 'a'],
 		['a', 'c', 'c', 'c', 'c', 'c', 'a'],
 		['a', 'a', 'a', 'c', 'a', 'a', 'a'],
 		['a', 'c', 'b', 'c', 'a', 'a', 'a'],
 		['a', 'a', 'a', 'a', 'a', 'a', 'a']
+	];*/
+	font = [
+		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'b', 'a', 'c', 'b', 'a', 'a', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'a', 'a', 'a', 'a'],
+		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'b', 'a', 'a', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
+		['a', 'b', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
+		['a', 'b', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'b', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'b', 'b', 'a', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'a', 'a', 'a'],
+		['a', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'a'],
+		['a', 'a', 'b', 'a', 'a', 'a', 'a', 'c', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'b', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'a', 'c', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
 	];
 	area = calcArea();
 	popmax = 200;
@@ -109,7 +136,7 @@ function calcArea() {
 
 function displayInfo() {
 	// Display current status of population
-	var answer = population.getBest();
+	var answer = "";//population.getBest();
 	
 	bestPhrase.html("Best phrase:<br>\t" + answer +
 					"<br>Record:<br>\t" + population.everRecord +
@@ -124,7 +151,7 @@ function displayInfo() {
 	
 	stats.html(statstext);
 
-	allPhrases.html("All phrases:<br>" + population.allPhrases())
+	//allPhrases.html("All phrases:<br>" + population.allPhrases())
 }
 
 
