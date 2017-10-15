@@ -9,6 +9,32 @@
 
 function Population(p, m, num) {
 
+	this.timeInitial = new Date().getTime();
+	this.time;
+	this.updateTime = function() {
+		this.time = new Date(new Date().getTime() - this.timeInitial);
+		
+		document.querySelector("#time").innerHTML = this.time.getMinutes() + ":" + this.time.getSeconds() + ":" + this.time.getMilliseconds();
+
+		if (this.time.getTime() < 5000)
+			document.querySelector("#status").innerHTML = "Procurando";
+		else if (this.time.getTime() < 10000)
+			document.querySelector("#status").innerHTML = "Procurando.";
+		else if (this.time.getTime() < 15000)
+			document.querySelector("#status").innerHTML = "Procurando..";
+		else if (this.time.getTime() < 20000)
+			document.querySelector("#status").innerHTML = "Procurando...";
+		else if (this.time.getTime() < 25000)
+			document.querySelector("#status").innerHTML = "Procurando....";
+		
+		if (this.time.getTime() > 30000)
+			document.querySelector("#status").innerHTML = "Procurando....<br>Já se passou um bom tempo, né?!";
+		
+		if (this.time.getTime() > 60000)
+			document.querySelector("#status").innerHTML = "Procurando....<br>Já se passou um bom tempo, né?!<br>Se o resultado atual não for satisfatório, tente recomeçar =)";
+		//console.log(this.time.getHours(), ":", this.time.getMinutes(), ":", this.time.getSeconds(), ":", this.time.getMilliseconds());
+	}
+
 	this.population;                   // Array to hold the current population
 	this.matingPool;                   // ArrayList which we will use for our "mating pool"
 	this.generations = 0;              // Number of generations
@@ -104,6 +130,8 @@ function Population(p, m, num) {
 			this.everRecordUseless = 0;//this.population[index].calcUseless();
 
 			this.limitGenerations += this.generations + this.searchSteps;
+
+			newBetter(this.everPhrase, this.everRecordSelect, {t: this.everRecordCovereds, a: wantCovered});
 		}
 
 		this.best = this.population[index].getPhrase();

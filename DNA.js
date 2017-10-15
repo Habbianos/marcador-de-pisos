@@ -43,7 +43,7 @@ function DNA(lines, cols) {
 		let select = this.calcSelect();
 		score += 10/pow((select+1), 4);
 
-		// Contagem de quantos foram cobertos (necessariamente todos do estado 'c')(+10x)
+		// Contagem de quantos foram cobertos (necessariamente todos do estado '◫')(+10x)
 		let covereds = this.calcCovereds();
 		score += 10*pow(covereds, 4);
 
@@ -66,7 +66,7 @@ function DNA(lines, cols) {
 	}
 
 	this.isCovered = function(i, j) {
-		if (typeof this.genes[i] != "undefined" && typeof this.genes[i][j] != "undefined" && font[i][j] == 'c') {
+		if (typeof this.genes[i] != "undefined" && typeof this.genes[i][j] != "undefined" && font[i][j] == '◫') {
 			if (typeof this.genes[i-1] != "undefined" && typeof this.genes[i-1][j] != "undefined" && this.genes[i-1][j] == 1) {
 				return true;
 			}
@@ -105,13 +105,13 @@ function DNA(lines, cols) {
 					this.genes[i][j] = 0;
 
 					if (typeof this.genes[i] != "undefined" && typeof this.genes[i][j] != "undefined") {
-						if (typeof this.genes[i-1] != "undefined" && typeof this.genes[i-1][j] != "undefined" && font[i-1][j] == 'c' && !this.isCovered(i-1, j))
+						if (typeof this.genes[i-1] != "undefined" && typeof this.genes[i-1][j] != "undefined" && font[i-1][j] == '◫' && !this.isCovered(i-1, j))
 							useless = false;
-						if (typeof this.genes[i+1] != "undefined" && typeof this.genes[i+1][j] != "undefined" && font[i+1][j] == 'c' && !this.isCovered(i+1, j))
+						if (typeof this.genes[i+1] != "undefined" && typeof this.genes[i+1][j] != "undefined" && font[i+1][j] == '◫' && !this.isCovered(i+1, j))
 							useless = false;
-						if (typeof this.genes[i][j-1] != "undefined" && font[i][j-1] == 'c' && !this.isCovered(i, j-1))
+						if (typeof this.genes[i][j-1] != "undefined" && font[i][j-1] == '◫' && !this.isCovered(i, j-1))
 							useless = false;
-						if (typeof this.genes[i][j+1] != "undefined" && font[i][j+1] == 'c' && !this.isCovered(i, j+1))
+						if (typeof this.genes[i][j+1] != "undefined" && font[i][j+1] == '◫' && !this.isCovered(i, j+1))
 							useless = false;
 							
 						

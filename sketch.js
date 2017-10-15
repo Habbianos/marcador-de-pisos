@@ -29,7 +29,8 @@
 //   # Rinse and repeat
 
 
-//var target;
+let calc = false;
+let log = false;
 let font;
 let area;
 let popmax;
@@ -40,120 +41,58 @@ var bestPhrase;
 var allPhrases;
 var stats;
 
-let wantCovered = 0;
+let wantCovered;
 
 function setup() {
 	//frameRate(1);
-	bestPhrase = createP("Best phrase:");
+	bestPhrase = createP("");
 	bestPhrase.position(10,10);
 	bestPhrase.class("best");
 
-	allPhrases = createP("All phrases:");
+	allPhrases = createP("");
 	allPhrases.position(600,10);
 	allPhrases.class("all");
 
-	stats = createP("Stats");
+	stats = createP("");
 	stats.position(10,200);
 	stats.class("stats");
-	
-	//createCanvas(640, 360);
-	//target = "To be or not to be.";
-	/*font = [
-		['c', 'b', 'c', 'c', 'c'],
-		['c', 'c', 'c', 'b', 'c']
-	];*/
-	/*font = [
-		['a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'b', 'c', 'c', 'b', 'c', 'a'],
-		['a', 'c', 'c', 'c', 'c', 'c', 'a'],
-		['a', 'a', 'a', 'c', 'a', 'a', 'a'],
-		['a', 'c', 'b', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a']
-	];*/
-	font = [
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'b', 'a', 'c', 'b', 'a', 'a', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'a', 'a', 'a', 'a'],
-		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'b', 'a', 'a', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'b', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
-		['a', 'b', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'b', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'b', 'b', 'a', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'a'],
-		['a', 'a', 'b', 'a', 'a', 'a', 'a', 'c', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'b', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'a', 'c', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
-	];
-	area = calcArea();
-	for (let i = 0; i < font.length; i++) {
-		for (let j = 0; j < font[0].length; j++) {
-			if (font[i][j] == 'c')
-				wantCovered++;
-		}
-	}
 
-
-	popmax = 200;
-	mutationRate = 0.01;
-
-	// Create a population with the font phrase, mutation rate, and population max
-	population = new Population(font, mutationRate, popmax);
+	noLoop();
 }
 
 function draw() {
-	//Create next generation
-	population.generate();
-	// Calculate fitness
-	population.calcFitness();
+	if (calc) {
+		// Refresh the timer
+		population.updateTime();
 
-	population.evaluate();
+		//Create next generation
+		population.generate();
+		// Calculate fitness
+		population.calcFitness();
 
-	// If we found the target phrase, stop
-	if (population.isFinished()) {
-		//println(millis()/1000.0);
-		noLoop();
-	}
+		population.evaluate();
 
-	displayInfo();
-}
-
-function calcArea() {
-	let temp = new Array(font.length);
-	
-	for (let i = 0; i < temp.length; i++) {
-		temp[i] = new Array(font[0].length);
-
-		for (let j = 0; j < temp[0].length; j++) {
-			temp[i][j] = font[i][j] == 'a' ? 0 : 1;
+		// If we found the target phrase, stop
+		if (population.isFinished()) {
+			//println(millis()/1000.0);
+			noLoop();
 		}
-	}
 
-	return temp.slice();
+		if (log)
+			displayInfo();
+	}
 }
 
 function displayInfo() {
 	// Display current status of population
-	var answer = "";//population.getBest();
+	var answer = population.getBest();
 	
 	bestPhrase.html("Best phrase:<br>\t" + answer +
 					"<br>Record:<br>\t" + population.everRecord +
 					"<br>Select:<br>\t" + population.everRecordSelect +
 					"<br>Covereds:<br>\t" + population.everRecordCovereds + " OF " + wantCovered);
 	
-	var statstext = "total generations:     " + population.getGenerations() + "<br>";
+	var statstext = "Stats<br>total generations:     " + population.getGenerations() + "<br>";
 	statstext +=    "average fitness:       " + nf(population.getAverageFitness()) + "<br>";
 	statstext +=    "total population:      " + popmax + "<br>";
 	statstext +=    "mutation rate:         " + floor(mutationRate * 100) + "%";
