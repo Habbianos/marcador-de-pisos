@@ -73,16 +73,27 @@ details tr td:not(:first-child) {
 }
 input[type="button"] {
 	cursor: pointer;
-	background: #4a731f;
-	background-image: linear-gradient(to bottom, #4a731f, #4d6f29);
+	background: #6c9833;
+	/*background-image: linear-gradient(to bottom, #4a731f, #4d6f29);*/
 	border-radius: 4px;
 	color: #ffffff;
 	font-size: 15px;
 	padding: 4px 8px 4px 8px;
 	text-decoration: none;
-	border: 0;
+	border: 1px solid #527326;
+	border-radius: 3px;
 	margin: 3px;
 	transition: background .4s;
+}
+
+input[type="button"]:hover {
+	background: #396c11;
+	border-color: #23420a;
+	/*background-image: linear-gradient(to bottom, #264e00, #1c3800);*/
+}
+input[type="button"]:active {
+	background: #2b4d11;
+	border-color: #132107;
 }
 .btn-1 {
 	filter: hue-rotate(90deg);
@@ -94,10 +105,14 @@ input[type="button"] {
 	filter: hue-rotate(270deg);
 }
 
-input[type="button"]:hover {
-	background: #264e00;
-	background-image: linear-gradient(to bottom, #264e00, #1c3800);
-	text-decoration: none;
+#copy, #calc, #clean {
+    vertical-align: middle;
+}
+#copy {
+	white-space: normal;
+    width: 60px;
+	filter: hue-rotate(130deg);
+	font-size: 7pt;
 }
 #calc {
 	margin: 5px auto;

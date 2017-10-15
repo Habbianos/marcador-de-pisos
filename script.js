@@ -17,29 +17,6 @@ function teste(n) {
 	document.querySelector("#qtdCovered").innerHTML = "";
 }
 
-
-function insertTextAtCursor(text) {
-    var sel, range, textNode;
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            range = sel.getRangeAt(0);
-            range.deleteContents();
-            textNode = document.createTextNode(text);
-            range.insertNode(textNode);
-
-            // Move caret to the end of the newly inserted text node
-            range.setStart(textNode, textNode.length);
-            range.setEnd(textNode, textNode.length);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
-    } else if (document.selection && document.selection.createRange) {
-        range = document.selection.createRange();
-        range.pasteHTML(text);
-    }
-}
-
 // Converte os caracteres inseridos e impede que outros caracteres sejam inseridos
 document.querySelector("#font").addEventListener("keypress", function(event){
 	var keycode = event.which || event.keyCode;
@@ -65,13 +42,22 @@ document.querySelector("#font").addEventListener("keypress", function(event){
 		event.preventDefault();
 });
 
+observeDOM(document.querySelector("#font"), function() {
+	let thiss = document.querySelector("#font");
+	if (thiss.hasAttribute("contenteditable") && !thiss.hasAttribute("editing")) {
+		thiss.setAttribute("editing", "");
+		
+		removeSpans();
+	}
+});
+
+function removeSpans() {
+	document.querySelector("#font").innerHTML = (document.querySelector("#font").innerHTML).replace(/<span\s*\w*.*?>|<\/span>/gm, "");;
+}
+
 document.querySelector("#calc").addEventListener("click", function(){
 	if (this.getAttribute("value") == "Calcular") {
 		loadinfos();
-		this.setAttribute("value", "Parar");
-		document.querySelector(".indeterminate").style.display = "inherit";
-		document.querySelector("#font").removeAttribute("contenteditable");
-		document.querySelector("#font").setAttribute("one-line", "Calculando");
 	} else {
 		noLoop();
 		this.setAttribute("value", "Calcular");
@@ -99,48 +85,6 @@ document.querySelector("#clean").addEventListener("click", function() {
 
 
 function loadinfos() {
-	wantCovered = 0;
-
-	
-	/*font = [
-		['c', 'b', 'c', 'c', 'c'],
-		['c', 'c', 'c', 'b', 'c']
-	];*/
-	/*font = [
-		['a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'b', 'c', 'c', 'b', 'c', 'a'],
-		['a', 'c', 'c', 'c', 'c', 'c', 'a'],
-		['a', 'a', 'a', 'c', 'a', 'a', 'a'],
-		['a', 'c', 'b', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a']
-	];*/
-	/*font = [
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'b', 'a', 'c', 'b', 'a', 'a', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'a', 'a', 'a', 'a'],
-		['a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'b', 'a', 'a', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'a'],
-		['a', 'b', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'a', 'a'],
-		['a', 'b', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'b', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'b', 'b', 'a', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'a', 'a', 'a'],
-		['a', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'a', 'c', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'a', 'c', 'a', 'c', 'c', 'c', 'c', 'a'],
-		['a', 'a', 'b', 'a', 'a', 'a', 'a', 'c', 'a', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'c', 'c', 'c', 'b', 'a', 'b', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'c', 'c', 'a', 'c', 'c', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
-		['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
-	];*/
 
 	font = document.querySelector("#font").innerHTML;
 	font = font.replace(/^<br>/gm, "");
@@ -156,28 +100,38 @@ function loadinfos() {
 		//font = font.replace(/<br><br>/gm, "");
 		document.querySelector("#font").innerHTML = font;
 	}
-	font = font.split("<br>")
-	for (let i = 0; i < font.length; i++)
-		font[i] = font[i].split("");
+	if (font != "") {
 
-	area = calcArea();
-	for (let i = 0; i < font.length; i++) {
-		for (let j = 0; j < font[0].length; j++) {
-			if (font[i][j] == '◫')
-				wantCovered++;
+		document.querySelector("#calc").setAttribute("value", "Parar");
+		document.querySelector(".indeterminate").style.display = "inherit";
+		document.querySelector("#font").removeAttribute("contenteditable");
+		document.querySelector("#font").removeAttribute("editing");
+
+		wantCovered = 0;
+
+		font = font.split("<br>")
+		for (let i = 0; i < font.length; i++)
+			font[i] = font[i].split("");
+
+		area = calcArea();
+		for (let i = 0; i < font.length; i++) {
+			for (let j = 0; j < font[0].length; j++) {
+				if (font[i][j] == '◫')
+					wantCovered++;
+			}
 		}
+
+
+		popmax = 200;
+		mutationRate = 0.02;
+
+		// Create a population with the font phrase, mutation rate, and population max
+		population = new Population(font, mutationRate, popmax);
+
+		calc = true;
+
+		loop();
 	}
-
-
-	popmax = 200;
-	mutationRate = 0.01;
-
-	// Create a population with the font phrase, mutation rate, and population max
-	population = new Population(font, mutationRate, popmax);
-
-	calc = true;
-
-	loop();
 }
 
 
