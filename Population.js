@@ -131,7 +131,7 @@ function Population(p, m, num) {
 
 			this.limitGenerations += this.generations + this.searchSteps;
 
-			newBetter(this.everPhrase, this.everRecordSelect, {t: this.everRecordCovereds, a: wantCovered});
+			newBetter(font, this.everPhrase, this.everRecordSelect, {t: this.everRecordCovereds, a: wantCovered});
 		}
 
 		this.best = this.population[index].getPhrase();

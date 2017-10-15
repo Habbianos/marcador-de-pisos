@@ -8,7 +8,7 @@ function teste(n) {
 		obj.innerHTML = "▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩<br>▩◫▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩<br>▩◫▩▩▩▩▩◫◪▩◫◪▩▩▩◪◪▩▩◪◪▩▩▩▩<br>▩◫▩▩▩▩▩◫▩▩◫▩▩▩▩◫▩▩▩◫▩▩▩▩▩<br>▩▩▩▩▩▩◫◫◫◫◫◫▩▩▩◫▩▩▩◫▩▩▩▩▩<br>▩▩▩▩▩◫◫◫◫◫◫◫◫▩◫◫◫▩◫◫◫▩▩▩▩<br>▩▩◪▩▩◪◫◫◫◫◫◫◪▩◫◫◫▩◫◫◫▩▩▩▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫◪◫◫◫◪▩▩▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫◪◫◫◫◪▩▩▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫▩◫◫◫▩▩▩▩<br>▩▩◫▩▩▩◫◫◫◫◫◫▩▩◫◫◫▩◫◫◫▩▩▩▩<br>▩▩▩▩▩▩◫◫◫◫◫◫▩▩◫◫◫▩◫◫◫▩▩▩▩<br>▩▩▩▩▩▩▩▩◫◫▩▩▩◫◫◫◫◫◫◫◫▩▩▩▩<br>▩◪◪◪◪◪◫◫◫◫◫◫◫◫◫▩▩▩▩▩▩▩▩▩▩<br>▩▩▩▩▩▩◫◫◫◫◫◫◫◫◫▩◫◫◫◫◫◪▩▩▩<br>▩◪◪◪◪◪◫◫◫◫◫◫◫◫◫◫◫▩◫▩◫◫▩▩▩<br>▩▩▩▩▩▩▩▩◫▩▩▩▩▩◫◫◫▩◫▩◫◫◫◫▩<br>▩▩▩▩▩▩◫◫◫◫◫▩▩▩◫▩◫◫◫◫◫◫▩◪▩<br>▩▩◫▩▩▩◫◫◫◫◫▩▩▩◫▩▩▩▩▩▩▩▩▩▩<br>▩▩◫▩▩◪◪◫◫◫◪◪▩▩◫▩◫◫◫◫◫◫▩▩▩<br>▩▩◫▩▩▩◫◫◫◫◫▩▩▩◫◫◫▩◫▩◫◫▩▩▩<br>▩▩◫▩▩▩▩◫▩◫▩▩▩▩◫◫◫▩◫▩◫◫◫◫▩<br>▩▩◪▩▩▩▩◫▩◫▩▩▩▩▩▩◫◫◫◫◫◪▩◪▩<br>▩▩▩▩▩▩◫◫▩◫◫▩▩▩▩▩▩▩▩▩▩▩▩▩▩<br>▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩▩";
 	}
 
-	if (document.querySelector("#calc").getAttribute("value") == "Parar") {
+	if (document.querySelector("#calc").innerHTML == "Parar") {
 		document.querySelector("#calc").click();
 	}
 
@@ -48,20 +48,40 @@ observeDOM(document.querySelector("#font"), function() {
 		thiss.setAttribute("editing", "");
 		
 		removeSpans();
+		solution = {};
 	}
 });
 
 function removeSpans() {
-	document.querySelector("#font").innerHTML = (document.querySelector("#font").innerHTML).replace(/<span\s*\w*.*?>|<\/span>/gm, "");;
+	document.querySelector("#font").innerHTML = (document.querySelector("#font").innerHTML).replace(/<span\s*\w*.*?>|<\/span>/gm, "");
+}
+
+
+document.querySelector("#copy").addEventListener("click", copySolution);
+function copySolution() {
+	if (copyTextToClipboard(JSON.stringify(solution))) {
+		document.querySelector("#exportSoluctionModalLabel").innerHTML = "Cópia da solução realizada com sucesso";
+		document.querySelector("#exportSoluctionModal .modal-body").innerHTML = "<p>O código da solução encontrada foi copiado para sua área de transferência. Caso não esteja, aqui está o código:</p><pre><code>"+JSON.stringify(solution)+"</code></pre>";
+	} else {
+		document.querySelector("#exportSoluctionModalLabel").innerHTML = "Cópia da solução falhou";
+		document.querySelector("#exportSoluctionModal .modal-body").innerHTML = "<p>Infelimznete o seu navegador não suporta cópia de texto via JavaScript. Selecione o código da solução a seguir e copie você mesmo:</p><pre><code>"+JSON.stringify(solution)+"</code></pre>";
+	}
+	$("#exportSoluctionModal").modal("show");
+}
+document.querySelector("#paste").addEventListener("click", function(){$("#importSoluctionModal").modal("show");});
+document.querySelector("#importSoluctionButton").addEventListener("click", pasteSolution);
+function pasteSolution() {
+	solution = JSON.parse(document.querySelector("#importSoluctionTextarea").value);
+	newBetter(solution.font, solution.phrase, solution.select, solution.covereds);
 }
 
 document.querySelector("#calc").addEventListener("click", function(){
-	if (this.getAttribute("value") == "Calcular") {
+	if (this.innerHTML == "Calcular") {
 		loadinfos();
 	} else {
 		noLoop();
-		this.setAttribute("value", "Calcular");
-		document.querySelector(".indeterminate").style.display = "none";
+		this.innerHTML = "Calcular";
+		document.querySelector(".progress-bar").style.width = "0";
 		setTimeout(function() {
 			document.querySelector("#status").innerHTML = "";
 		}, 100);
@@ -70,7 +90,7 @@ document.querySelector("#calc").addEventListener("click", function(){
 });
 
 document.querySelector("#clean").addEventListener("click", function() {
-	if (document.querySelector("#calc").getAttribute("value") == "Parar") {
+	if (document.querySelector("#calc").innerHTML == "Parar") {
 		document.querySelector("#calc").click();
 	}
 
@@ -102,8 +122,8 @@ function loadinfos() {
 	}
 	if (font != "") {
 
-		document.querySelector("#calc").setAttribute("value", "Parar");
-		document.querySelector(".indeterminate").style.display = "inherit";
+		document.querySelector("#calc").innerHTML = "Parar";
+		document.querySelector(".progress-bar").style.width = "100%";
 		document.querySelector("#font").removeAttribute("contenteditable");
 		document.querySelector("#font").removeAttribute("editing");
 
@@ -151,7 +171,15 @@ function calcArea() {
 }
 
 
-function newBetter(phrase, select, covereds) {
+let solution = {};
+function newBetter(font, phrase, select, covereds) {
+	solution = {
+		font: font,
+		phrase: phrase,
+		select: select,
+		covereds: covereds
+	};
+
 	document.querySelector("#qtdSelect").innerHTML = select+" selecionados";
 	document.querySelector("#qtdCovered").innerHTML = covereds.t+" / "+covereds.a+" cobertos";
 
@@ -168,6 +196,61 @@ function newBetter(phrase, select, covereds) {
 			else
 				states[i][j] = 0;
 			k++;
+		}
+	}
+	for (let i = 0; i < states.length; i++) {
+		for (let j = 0; j < states[i].length; j++) {
+			if (states[i][j] == 2 || states[i][j] == 3) {
+				if (typeof states[i-1] != "undefined" && typeof states[i-1][j] != "undefined" && font[i-1][j] == '◫') {
+					switch (states[i-1][j]) {
+						case 0:
+							states[i-1][j] = 1;
+							break;
+						case 2:
+							states[i-1][j] = 3;
+					}
+				}
+				if (typeof states[i+1] != "undefined" && typeof states[i+1][j] != "undefined" && font[i+1][j] == '◫') {
+					switch (states[i+1][j]) {
+						case 0:
+							states[i+1][j] = 1;
+							break;
+						case 2:
+							states[i+1][j] = 3;
+					}
+				}
+				if (typeof states[i][j-1] != "undefined" && font[i][j-1] == '◫') {
+					switch (states[i][j-1]) {
+						case 0:
+							states[i][j-1] = 1;
+							break;
+						case 2:
+							states[i][j-1] = 3;
+					}
+				}
+				if (typeof states[i][j+1] != "undefined" && font[i][j+1] == '◫') {
+					switch (states[i][j+1]) {
+						case 0:
+							states[i][j+1] = 1;
+							break;
+						case 2:
+							states[i][j+1] = 3;
+					}
+				}
+
+			} else if (states[i][j] == 0 && font[i][j] == '◫') {
+				let has_neighbor = false
+				if (
+					(typeof states[i-1] != "undefined" && typeof states[i-1][j] != "undefined" && (font[i-1][j] == '◫' || font[i-1][j] == '◪')) ||
+					(typeof states[i+1] != "undefined" && typeof states[i+1][j] != "undefined" && (font[i+1][j] == '◫' || font[i+1][j] == '◪')) ||
+					(typeof states[i][j-1] != "undefined" && (font[i][j-1] == '◫' || font[i][j-1] == '◪')) ||
+					(typeof states[i][j+1] != "undefined" && (font[i][j+1] == '◫' || font[i][j+1] == '◪'))
+				) {
+					has_neighbor = true;
+				}
+				if (!has_neighbor)
+					states[i][j] = 4;
+			}
 		}
 	}
 
@@ -187,5 +270,11 @@ function newBetter(phrase, select, covereds) {
 		}
 		result += "<br>";
 	}
+
+	let is_editable = document.querySelector("#font").hasAttribute("contenteditable");
+	if (is_editable)
+		document.querySelector("#font").removeAttribute("contenteditable");
 	document.querySelector("#font").innerHTML = result;
+	if (is_editable)
+		document.querySelector("#font").setAttribute("contenteditable", "");
 }

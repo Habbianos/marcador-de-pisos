@@ -71,28 +71,21 @@ details tr td:first-child {
 details tr td:not(:first-child) {
 	text-align: left;
 }
-input[type="button"] {
-	cursor: pointer;
-	background: #6c9833;
+button.btn-colored {
+	color: white;
+	background-color: #6c9833 !important;
 	/*background-image: linear-gradient(to bottom, #4a731f, #4d6f29);*/
-	border-radius: 4px;
-	color: #ffffff;
-	font-size: 15px;
-	padding: 4px 8px 4px 8px;
-	text-decoration: none;
-	border: 1px solid #527326;
-	border-radius: 3px;
-	margin: 3px;
 	transition: background .4s;
 }
 
-input[type="button"]:hover {
-	background: #396c11;
+button.btn-colored:hover {
+	cursor: pointer;
+	background-color: #396c11 !important;
 	border-color: #23420a;
 	/*background-image: linear-gradient(to bottom, #264e00, #1c3800);*/
 }
-input[type="button"]:active {
-	background: #2b4d11;
+button.btn-colored:active {
+	background-color: #2b4d11 !important;
 	border-color: #132107;
 }
 .btn-1 {
@@ -108,18 +101,16 @@ input[type="button"]:active {
 #copy, #calc, #clean {
     vertical-align: middle;
 }
-#copy {
+#soluction {
 	white-space: normal;
-    width: 60px;
+    height: auto;
 	filter: hue-rotate(130deg);
-	font-size: 7pt;
-}
-#calc {
-	margin: 5px auto;
 }
 #clean {
 	filter: hue-rotate(300deg);
-	font-size: 7pt;
+}
+.progress {
+	border-radius: 0 !important;
 }
 #status, #qtdSelect, #qtdCovered {
 	display: block;
