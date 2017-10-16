@@ -36,7 +36,6 @@ function Population(p, m, num) {
 	}
 
 	this.population;                   // Array to hold the current population
-	this.matingPool;                   // ArrayList which we will use for our "mating pool"
 	this.generations = 0;              // Number of generations
 	this.finished = false;             // Are we finished evolving?
 	this.font = p;                     // Font matrix
@@ -54,7 +53,6 @@ function Population(p, m, num) {
 	for (let i = 0; i < num; i++) {
 		this.population[i] = new DNA();
 	}
-	this.matingPool = [];
 
 	// Fill our fitness array with a value for every member of the population
 	this.calcFitness = function() {
