@@ -28,6 +28,16 @@
 //  
 //   # Rinse and repeat
 
+// DOM elements
+let btn_ex = new Array(3),
+	data,
+	time,
+	qtd_select,
+	qtd_covered,
+	btn_calc,
+	btn_clean,
+	progress,
+	status;
 
 let calc = false;
 let log = false;
@@ -43,21 +53,33 @@ var stats;
 let wantCovered;
 
 function setup() {
-	//frameRate(1);
-	bestPhrase = createP("");
-	bestPhrase.position(10,10);
-	bestPhrase.class("best");
-
-	allPhrases = createP("");
-	allPhrases.position(600,10);
-	allPhrases.class("all");
-
-	stats = createP("");
-	stats.position(10,200);
-	stats.class("stats");
-
 	noCanvas();
 	noLoop();
+
+	btn_ex[0] = select(".btn-1");
+	btn_ex[1] = select(".btn-2");
+	btn_ex[2] = select(".btn-3");
+	for (let i = 0; i < btn_ex.length; i++)
+		btn_ex[i].mouseClicked(function() {
+			ex(i+1);
+		});
+
+	data = select("#font");
+
+	time = select("#time");
+
+	qtd_select = select("#qtdSelect");
+
+	qtd_covered = select("#qtdCovered");
+
+	btn_calc = select("#calc");
+	btn_calc.mouseClicked(btnCalcClicked);
+
+	btn_clean = select("#clean");
+
+	progress = select(".progress-bar");
+
+	status = select("#status");
 }
 
 function draw() {
@@ -80,7 +102,8 @@ function draw() {
 
 		if (log)
 			displayInfo();
-	}
+	} else
+		noLoop();
 }
 
 function displayInfo() {
