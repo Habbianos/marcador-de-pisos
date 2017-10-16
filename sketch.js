@@ -56,6 +56,7 @@ function setup() {
 	stats.position(10,200);
 	stats.class("stats");
 
+	noCanvas();
 	noLoop();
 }
 
