@@ -38,8 +38,6 @@ function Population(p, m, num) {
 	this.population;                   // Array to hold the current population
 	this.matingPool;                   // ArrayList which we will use for our "mating pool"
 	this.generations = 0;              // Number of generations
-	this.searchSteps = p.length * p[0].length * 4;
-	this.limitGenerations = this.searchSteps;
 	this.finished = false;             // Are we finished evolving?
 	this.font = p;                     // Font matrix
 	this.mutationRate = m;             // Mutation rate
@@ -129,16 +127,10 @@ function Population(p, m, num) {
 			this.everRecordCovereds = this.population[index].calcCovereds();
 			this.everRecordUseless = 0;//this.population[index].calcUseless();
 
-			this.limitGenerations += this.generations + this.searchSteps;
-
 			newBetter(font, this.everPhrase, this.everRecordSelect, {t: this.everRecordCovereds, a: wantCovered});
 		}
 
 		this.best = this.population[index].getPhrase();
-		//if (worldrecord === this.perfectScore) {
-		//if (this.generations >= this.limitGenerations) {
-		//	this.finished = true;
-		//}
 	}
 
 	this.isFinished = function() {
