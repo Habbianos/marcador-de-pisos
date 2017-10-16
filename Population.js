@@ -62,6 +62,8 @@ function Population(ma, mu, num) {
 
 
 		this.generations++;
+
+		generationsP.html(this.generations)
 	}
 
 	this.pickOne = function() {
@@ -92,14 +94,15 @@ function Population(ma, mu, num) {
 				worldrecord = this.population[i].fitness;
 			}
 		}
-		if (worldrecord > this.recordPts) {
+		if (worldrecord >= this.recordPts) {
 			this.recordMatrix = this.population[index].getMatrix();
 			this.recordPts = worldrecord;
 			this.recordSelect = this.population[index].calcSelect();
 			this.recordCovereds = this.population[index].calcCovereds();
 			this.recordUseless = 0;//this.population[index].calcUseless();
 
-			newBetter(font, this.recordMatrix, this.recordSelect, {t: this.recordCovereds, a: wantCovered});
+			if (worldrecord >= solution.pts)
+				newBetter(this.recordPts, font, this.recordMatrix, this.recordSelect, {t: this.recordCovereds, a: wantCovered});
 		}
 
 		this.best = this.population[index].getMatrix();

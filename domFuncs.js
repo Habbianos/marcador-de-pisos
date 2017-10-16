@@ -40,7 +40,9 @@ function dataDOMChange() {
 		data.attribute("editing", "");
 		
 		removeSpans();
-		solution = {};
+		solution = {
+			pts: 0
+		};
 	}
 };
 // Remove colors
@@ -103,7 +105,7 @@ function updateTime() {
 	let time_now = (new Date().getTime()) - time_init;
 
 	time.html(
-		(time_now > 360000 ? formatTime(floor(time_now / 360000 % 24), 2) + ":" : "") + // Hours
+		(time_now > 3600000 ? formatTime(floor(time_now / 3600000 % 24), 2) + ":" : "") + // Hours
 		(time_now > 60000 ? formatTime(floor(time_now / 60000 % 60), 2) + ":" : "") + // Minutes
 		(time_now > 1000 ? formatTime(floor(time_now / 1000 % 60), 2) + ":" : "") + // Seconds
 		formatTime(time_now % 1000, 3) // Miliseconds

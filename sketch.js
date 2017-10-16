@@ -56,6 +56,8 @@ let wantCovered,
 
 let time_init;
 
+let generationsP;
+
 function setup() {
 	noCanvas();
 	noLoop();
@@ -99,9 +101,13 @@ function setup() {
 
 	wantCovered = 0;
 
-	solution = {};
+	solution = {
+		pts: 0
+	};
 
 	time_now = 0;
+
+	generationsP = createP();
 }
 
 function draw() {
@@ -166,10 +172,14 @@ function loadinfos() {
 		}
 
 		popmax = 200;			// Total of population
-		mutationRate = 0.02;	// Value used to randomly mutation
+		mutationRate = 0.01;	// Value used to randomly mutation
+		solution = {
+			pts: 0
+		};
 
 		// Create a population with the font matrix, mutation rate, and population max
 		population = new Population(font, mutationRate, popmax);
+
 
 		// Start the calcs
 		calc = true;
@@ -180,8 +190,9 @@ function loadinfos() {
 }
 
 
-function newBetter(font, matrix, select, covereds) {
+function newBetter(pts, font, matrix, select, covereds) {
 	solution = {
+		pts: pts,
 		font: font,
 		matrix: matrix,
 		select: select,

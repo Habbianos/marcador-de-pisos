@@ -41,7 +41,7 @@ function DNA(lines, cols) {
 
 		// Contagem de quantos foram selecionados (quando menos, melhor)(+10/x)
 		let select = this.calcSelect();
-		score += 10/pow((select+1), 4);
+		score += pow(10/(select+1), 4);
 
 		// Contagem de quantos foram cobertos (necessariamente todos do estado '◫')(+10x)
 		let covereds = this.calcCovereds();
