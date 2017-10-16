@@ -32,7 +32,6 @@
 let calc = false;
 let log = false;
 let font;
-let area;
 let popmax;
 let mutationRate;
 let population;

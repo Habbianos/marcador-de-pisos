@@ -133,7 +133,6 @@ function loadinfos() {
 		for (let i = 0; i < font.length; i++)
 			font[i] = font[i].split("");
 
-		area = calcArea();
 		for (let i = 0; i < font.length; i++) {
 			for (let j = 0; j < font[0].length; j++) {
 				if (font[i][j] == '◫')
@@ -152,22 +151,6 @@ function loadinfos() {
 
 		loop();
 	}
-}
-
-
-
-function calcArea() {
-	let temp = new Array(font.length);
-	
-	for (let i = 0; i < temp.length; i++) {
-		temp[i] = new Array(font[0].length);
-
-		for (let j = 0; j < temp[0].length; j++) {
-			temp[i][j] = font[i][j] == '▩' ? 0 : 1;
-		}
-	}
-
-	return temp.slice();
 }
 
 

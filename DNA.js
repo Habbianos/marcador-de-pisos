@@ -23,7 +23,7 @@ function DNA(lines, cols) {
 	for (let i = 0; i < lines; i++) {
 		this.genes[i] = new Array(cols);
 		for (let j = 0; j < cols; j++) {
-			this.genes[i][j] = area[i][j] == 1 ? newState() : -1; // Pick a state to the area
+			this.genes[i][j] = font[i][j] == '▩' ? -1 : newState(); // Pick a state to the area
 		}
 	}
 
