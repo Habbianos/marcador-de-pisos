@@ -94,3 +94,35 @@ function btnCleanClicked() {
 		qtd_covered.html("");
 	}, 100);
 }
+
+function formatTime(t, n) {
+	return ("0000" + t).slice(-n);
+}
+
+function updateTime() {
+	let time_now = (new Date().getTime()) - time_init;
+
+	time.html(
+		(time_now > 360000 ? formatTime(floor(time_now / 360000 % 24), 2) + ":" : "") + // Hours
+		(time_now > 60000 ? formatTime(floor(time_now / 60000 % 60), 2) + ":" : "") + // Minutes
+		(time_now > 1000 ? formatTime(floor(time_now / 1000 % 60), 2) + ":" : "") + // Seconds
+		formatTime(time_now % 1000, 3) // Miliseconds
+	);
+
+	if (time_now < 5000)
+		status.html("Procurando");
+	else if (time_now < 10000)
+		status.html("Procurando.");
+	else if (time_now < 15000)
+		status.html("Procurando..");
+	else if (time_now < 20000)
+		status.html("Procurando...");
+	else if (time_now < 25000)
+		status.html("Procurando....");
+	
+	if (time_now > 30000)
+		status.html("Procurando....<br>Já se passou um bom tempo, né?!");
+	
+	if (time_now > 60000)
+		status.html("Procurando....<br>Já se passou um bom tempo, né?!<br>Se o resultado atual não for satisfatório, tente recomeçar =)");
+}

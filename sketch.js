@@ -54,6 +54,8 @@ var stats;
 let wantCovered,
 	solution;
 
+let time_init;
+
 function setup() {
 	noCanvas();
 	noLoop();
@@ -98,12 +100,14 @@ function setup() {
 	wantCovered = 0;
 
 	solution = {};
+
+	time_now = 0;
 }
 
 function draw() {
 	if (calc) {
 		// Refresh the timer
-		population.updateTime();
+		updateTime();
 
 		//Create next generation
 		population.generate();
@@ -118,8 +122,9 @@ function draw() {
 			noLoop();
 		}
 
-	} else
+	} else {
 		noLoop();
+	}
 }
 
 
@@ -169,6 +174,8 @@ function loadinfos() {
 		// Start the calcs
 		calc = true;
 		loop();
+
+		time_init = new Date().getTime();
 	}
 }
 
