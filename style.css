@@ -63,10 +63,12 @@ details .details-body p {
 	text-align: justify;
 	text-indent: 4em;
 }
-details .details-body p:first-line {
+details table {
+	margin: 16px auto;
 }
 details tr td:first-child {
 	text-align: right;
+	padding-right: 10px;
 }
 details tr td:not(:first-child) {
 	text-align: left;
@@ -87,6 +89,9 @@ button.btn-colored:hover {
 button.btn-colored:active {
 	background-color: #2b4d11 !important;
 	border-color: #132107;
+}
+.btn-1, .btn-2, .btn3 {
+	cursor: pointer;
 }
 .btn-1 {
 	filter: hue-rotate(90deg);
