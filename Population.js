@@ -7,19 +7,19 @@
 // A class to describe a population of virtual organisms
 // In this case, each organism is just an instance of a DNA object
 
-function Population(m, m, num) {
+function Population(ma, mu, num) {
 
-	this.population;                   // Array to hold the current population
-	this.generations = 0;              // Number of generations
-	this.finished = false;             // Are we finished evolving?
-	this.font = m;                     // Font matrix
-	this.mutationRate = m;             // Mutation rate
+	this.population;					// Array to hold the current population
+	this.generations = 0;				// Number of generations
+	this.finished = false;				// Are we finished evolving?
+	this.font = ma;						// Font matrix
+	this.mutationRate = mu;				// Mutation rate
 	//this.perfectScore = 1;
-	this.everMatrix = "";
-	this.everRecord = 0.0;
-	this.everRecordSelect = 0;
-	this.everRecordCovereds = 0;
-	this.everRecordUseless = 0;
+	this.recordMatrix = "";
+	this.recordPts = 0.0;
+	this.recordSelect = 0;
+	this.recordCovereds = 0;
+	this.recordUseless = 0;
 
 	this.best = [];
 
@@ -79,7 +79,7 @@ function Population(m, m, num) {
 
 	this.getBest = function() {
 		//return this.best;
-		return this.everMatrix;
+		return this.recordMatrix;
 	}
 
 	// Compute the current "most fit" member of the population
@@ -92,14 +92,14 @@ function Population(m, m, num) {
 				worldrecord = this.population[i].fitness;
 			}
 		}
-		if (worldrecord > this.everRecord) {
-			this.everMatrix = this.population[index].getMatrix();
-			this.everRecord = worldrecord;
-			this.everRecordSelect = this.population[index].calcSelect();
-			this.everRecordCovereds = this.population[index].calcCovereds();
-			this.everRecordUseless = 0;//this.population[index].calcUseless();
+		if (worldrecord > this.recordPts) {
+			this.recordMatrix = this.population[index].getMatrix();
+			this.recordPts = worldrecord;
+			this.recordSelect = this.population[index].calcSelect();
+			this.recordCovereds = this.population[index].calcCovereds();
+			this.recordUseless = 0;//this.population[index].calcUseless();
 
-			newBetter(font, this.everMatrix, this.everRecordSelect, {t: this.everRecordCovereds, a: wantCovered});
+			newBetter(font, this.recordMatrix, this.recordSelect, {t: this.recordCovereds, a: wantCovered});
 		}
 
 		this.best = this.population[index].getMatrix();
