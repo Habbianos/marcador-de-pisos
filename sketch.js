@@ -39,7 +39,8 @@ let btn_ex = new Array(3),
 	time,
 	qtd_select,
 	qtd_covered,
-	data;
+	data,
+	gener_span;
 
 let calc = false;
 let font;
@@ -55,8 +56,6 @@ let wantCovered,
 	solution;
 
 let time_init;
-
-let generationsP;
 
 function setup() {
 	noCanvas();
@@ -102,6 +101,8 @@ function setup() {
 	data.elt.addEventListener("keypress", dataKeypressEvent);
 	observeDOM(data.elt, dataDOMChange);
 
+	gener_span = select("#generation");
+
 	wantCovered = 0;
 
 	solution = {
@@ -109,8 +110,6 @@ function setup() {
 	};
 
 	time_now = 0;
-
-	generationsP = createP();
 }
 
 function draw() {

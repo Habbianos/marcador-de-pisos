@@ -53,7 +53,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<p>Este é um <a href="https://pt.wikipedia.org/wiki/Algoritmo_gen%C3%A9tico">algoritmo genético</a>, ou seja, não possui um padrão de busca, portanto é possível que em uma determinada execução ele não encontre o melhor resultado rapidamente - inclusive ele não é capaz de detectar se existe uma solução melhor ou não. Entretanto, pelo mesmo motivo é possível que o resultado encontrado seja um dos melhores e esta probabilidade é maior do que a anterior. Então, recalcular o cenário algumas vezes é uma <b>boa técnica</b>.</p>
+					<p>Este é um <a href="https://pt.wikipedia.org/wiki/Algoritmo_gen%C3%A9tico">algoritmo genético</a>, ou seja, não possui um padrão de busca, portanto é possível que em uma determinada execução ele não encontre o melhor resultado rapidamente - inclusive ele não é capaz de detectar se existe uma solução melhor ou não. Dependendo da complexidade da entrada, vale a pena deixar o código rodando durante algum tempo.</p>
 					<div class="btn-group" role="group" aria-label="Exemplos">
 						<button type="button" class="btn btn-1" data-toggle="tooltip" data-html="true" title="Recorde: <b>4</b> selecionados">Exemplo 1</button>
 						<button type="button" class="btn btn-2" data-toggle="tooltip" data-html="true" title="Recorde: <b>5</b> selecionados">Exemplo 2</button>
@@ -81,9 +81,11 @@
 			<span id="qtdCovered"></span>
 
 			<div class="container"><div id="font" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable></div></div>
+
+			<span id="generation"></span>
 		</main>
 		<footer>
-			O algoritmo para em 50000 tentativas caso isso corresponda a menos de 0,01% do total.
+			O algoritmo foi originalmente escrito por <a href="https://github.com/shiffman">Daniel Shiffman</a> para o livro <a href="http://natureofcode.com/">The Nature of Code</a> e explicado no canal <a href="https://www.youtube.com/user/shiffman">The Coding Train</a>, ambos de sua autoria. Posteriormente foi adaptado por <a href="https://github.com/Alynva">Alisson Nunes</a> como parte do projeto <a href="https://academiawired.blogspot.com.br/">Academia Wired</a> e o código está disponível no <a href="https://github.com/AcademiaWired/Marcador-de-pisos">GitHub</a> do projeto.
 		</footer>
 
 

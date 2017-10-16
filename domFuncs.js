@@ -94,6 +94,7 @@ function btnCleanClicked() {
 		time.html("");
 		qtd_select.html("");
 		qtd_covered.html("");
+		gener_span.html("");
 	}, 100);
 }
 
@@ -115,16 +116,14 @@ function updateTime() {
 		status.html("Procurando");
 	else if (time_now < 10000)
 		status.html("Procurando.");
-	else if (time_now < 15000)
-		status.html("Procurando..");
 	else if (time_now < 20000)
+		status.html("Procurando..");
+	else if (time_now < 40000)
 		status.html("Procurando...");
-	else if (time_now < 25000)
+	else if (time_now < 80000)
 		status.html("Procurando....");
-	
-	if (time_now > 30000)
-		status.html("Procurando....<br>Já se passou um bom tempo, né?!");
-	
-	if (time_now > 60000)
-		status.html("Procurando....<br>Já se passou um bom tempo, né?!<br>Se o resultado atual não for satisfatório, tente recomeçar =)");
+	else if (time_now < 160000)
+		status.html("Procurando.....");
+	else if (time_now < 320000)
+		status.html("Procurando.....");
 }

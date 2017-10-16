@@ -10,7 +10,7 @@ body {
 	margin: 0;
 	font-family: Sans-serif;
 	padding-top: 10px;
-	padding-bottom: 3em;
+	padding-bottom: 4em;
 }
 h1, main {
 	filter: drop-shadow(3px 3px 3px rgba(0,0,0,.6));
@@ -167,6 +167,9 @@ button.btn-colored:active {
 	height: 100%;
 	background-color: rgba(0,0,0,.2);
 }
+#generation {
+	font-size: .7em;
+}
 
 footer {
 	position: absolute;
@@ -181,4 +184,7 @@ footer {
 	padding: 5px;
 	padding-top: 15px;
 	font-size: .7em;
+}
+footer a {
+	color: #444;
 }
