@@ -30,7 +30,7 @@ function DNA(lines, cols) {
 	this.fitness = 0;
 
 	// Converts the states array to a String
-	this.getPhrase = function() {
+	this.getMatrix = function() {
 		//return [].concat.apply([], this.genes).join();
 		return this.genes.toString();
 	}

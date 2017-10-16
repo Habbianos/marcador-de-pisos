@@ -30,27 +30,29 @@
 
 // DOM elements
 let btn_ex = new Array(3),
-	data,
+	btn_copy,
+	btn_paste,
+	btn_calc,
+	btn_clean,
+	status,
+	progress,
 	time,
 	qtd_select,
 	qtd_covered,
-	btn_calc,
-	btn_clean,
-	progress,
-	status;
+	data;
 
 let calc = false;
-let log = false;
 let font;
 let popmax;
 let mutationRate;
 let population;
 
-var bestPhrase;
-var allPhrases;
+var bestMatrix;
+var allMatrixs;
 var stats;
 
-let wantCovered;
+let wantCovered,
+	solution;
 
 function setup() {
 	noCanvas();
@@ -64,7 +66,24 @@ function setup() {
 			ex(i+1);
 		});
 
-	data = select("#font");
+	btn_copy = select("#copy");
+	btn_copy.mouseClicked(copySolution);
+
+	btn_paste = select("#paste");
+	btn_paste.mouseClicked(function(){
+		$("#importSoluctionModal").modal("show");
+	});
+	select("#importSoluctionButton").mouseClicked(pasteSolution);
+
+	btn_calc = select("#calc");
+	btn_calc.mouseClicked(btnCalcClicked);
+
+	btn_clean = select("#clean");
+	btn_clean.mouseClicked(btnCleanClicked);
+
+	status = select("#status");
+
+	progress = select(".progress-bar");
 
 	time = select("#time");
 
@@ -72,14 +91,13 @@ function setup() {
 
 	qtd_covered = select("#qtdCovered");
 
-	btn_calc = select("#calc");
-	btn_calc.mouseClicked(btnCalcClicked);
+	data = select("#font");
+	data.elt.addEventListener("keypress", dataKeypressEvent);
+	observeDOM(data.elt, dataDOMChange);
 
-	btn_clean = select("#clean");
+	wantCovered = 0;
 
-	progress = select(".progress-bar");
-
-	status = select("#status");
+	solution = {};
 }
 
 function draw() {
@@ -89,40 +107,181 @@ function draw() {
 
 		//Create next generation
 		population.generate();
+
 		// Calculate fitness
 		population.calcFitness();
 
 		population.evaluate();
 
-		// If we found the target phrase, stop
+		// If we found the target matrix, stop
 		if (population.isFinished()) {
-			//println(millis()/1000.0);
 			noLoop();
 		}
 
-		if (log)
-			displayInfo();
 	} else
 		noLoop();
 }
 
-function displayInfo() {
-	// Display current status of population
-	var answer = population.getBest();
-	
-	bestPhrase.html("Best phrase:<br>\t" + answer +
-					"<br>Record:<br>\t" + population.everRecord +
-					"<br>Select:<br>\t" + population.everRecordSelect +
-					"<br>Covereds:<br>\t" + population.everRecordCovereds + " OF " + wantCovered);
-	
-	var statstext = "Stats<br>total generations:     " + population.getGenerations() + "<br>";
-	statstext +=    "average fitness:       " + nf(population.getAverageFitness()) + "<br>";
-	statstext +=    "total population:      " + popmax + "<br>";
-	statstext +=    "mutation rate:         " + floor(mutationRate * 100) + "%";
-	
-	stats.html(statstext);
 
-	//allPhrases.html("All phrases:<br>" + population.allPhrases())
+function loadinfos() {
+
+	font = data.html();
+	font = font.replace(/^<br>/gm, "");
+	font = font.replace(/<br>$/gm, "");
+	if (font.search(/[^▩◪◫<br>\n\r]/g) != -1) {
+		font = font.replace(/<\/div><div>|\n/g, "<br>");
+		font = font.replace(/<span\s*\w*.*?>|<\/span>/gm, "");
+		font = font.replace(/a/gm, "▩");
+		font = font.replace(/b(?!r)/gm, "◪");
+		font = font.replace(/c/gm, "◫");
+		font = font.replace(/<\/?div>/gm, "");
+		font = font.replace(/[^▩◪◫\<br\>\n\r]/gm, "");
+		//font = font.replace(/<br><br>/gm, "");
+		document.querySelector("#font").innerHTML = font;
+	}
+	if (font != "") {
+
+		btn_calc.html("Parar");
+		progress.style("width", "100%");
+		data.removeAttribute("contenteditable");
+		data.removeAttribute("editing");
+
+		// Split the font into a matrix
+		font = font.split("<br>")
+		for (let i = 0; i < font.length; i++)
+			font[i] = font[i].split("");
+
+		// Calculate the total of coverable elements
+		wantCovered = 0;
+		for (let i = 0; i < font.length; i++) {
+			for (let j = 0; j < font[i].length; j++) {
+				if (font[i][j] == '◫')
+					wantCovered++;
+			}
+		}
+
+		popmax = 200;			// Total of population
+		mutationRate = 0.02;	// Value used to randomly mutation
+
+		// Create a population with the font matrix, mutation rate, and population max
+		population = new Population(font, mutationRate, popmax);
+
+		// Start the calcs
+		calc = true;
+		loop();
+	}
 }
 
 
+function newBetter(font, matrix, select, covereds) {
+	solution = {
+		font: font,
+		matrix: matrix,
+		select: select,
+		covereds: covereds
+	};
+
+	qtd_select.html(select+" selecionados");
+	qtd_covered.html(covereds.t+" / "+covereds.a+" cobertos");
+
+
+	let k = 0;							// Index to selecteds
+	let selecteds = matrix.split(",");	// The solution finded
+
+	// Create the states matrix, marking the selected elements
+	let states = new Array(font.length);
+	for (let i = 0; i < font.length; i++) {
+		states[i] = new Array(font[i].length);
+		for (let j = 0; j < font[i].length; j++) {
+			if (selecteds[k] == 1)
+				states[i][j] = 2;
+			else
+				states[i][j] = 0;
+			k++;
+		}
+
+	}
+	// In the states matrix, mark the covered (state 1 or 3) or isoled (state 4) elements
+	for (let i = 0; i < states.length; i++) {
+		for (let j = 0; j < states[i].length; j++) {
+			if (states[i][j] == 2 || states[i][j] == 3) {
+				if (typeof states[i-1] != "undefined" && typeof states[i-1][j] != "undefined" && font[i-1][j] == '◫') {
+					switch (states[i-1][j]) {
+						case 0:
+							states[i-1][j] = 1;
+							break;
+						case 2:
+							states[i-1][j] = 3;
+					}
+				}
+				if (typeof states[i+1] != "undefined" && typeof states[i+1][j] != "undefined" && font[i+1][j] == '◫') {
+					switch (states[i+1][j]) {
+						case 0:
+							states[i+1][j] = 1;
+							break;
+						case 2:
+							states[i+1][j] = 3;
+					}
+				}
+				if (typeof states[i][j-1] != "undefined" && font[i][j-1] == '◫') {
+					switch (states[i][j-1]) {
+						case 0:
+							states[i][j-1] = 1;
+							break;
+						case 2:
+							states[i][j-1] = 3;
+					}
+				}
+				if (typeof states[i][j+1] != "undefined" && font[i][j+1] == '◫') {
+					switch (states[i][j+1]) {
+						case 0:
+							states[i][j+1] = 1;
+							break;
+						case 2:
+							states[i][j+1] = 3;
+					}
+				}
+
+			} else if (states[i][j] == 0 && font[i][j] == '◫') {
+				let has_neighbor = false
+				if (
+					(typeof states[i-1] != "undefined" && typeof states[i-1][j] != "undefined" && (font[i-1][j] == '◫' || font[i-1][j] == '◪')) ||
+					(typeof states[i+1] != "undefined" && typeof states[i+1][j] != "undefined" && (font[i+1][j] == '◫' || font[i+1][j] == '◪')) ||
+					(typeof states[i][j-1] != "undefined" && (font[i][j-1] == '◫' || font[i][j-1] == '◪')) ||
+					(typeof states[i][j+1] != "undefined" && (font[i][j+1] == '◫' || font[i][j+1] == '◪'))
+				) {
+					has_neighbor = true;
+				}
+				if (!has_neighbor)
+					states[i][j] = 4;
+			}
+		}
+	}
+
+	// Transform the states into colors
+	let result = "";
+	for (let i = 0; i < states.length; i++) {
+		for (let j = 0; j < states[i].length; j++) {
+			if (states[i][j] == 1)
+				result += "<span style=\"color: green\">"+font[i][j]+"</span>"
+			else if (states[i][j] == 2)
+				result += "<span style=\"color: orange\">"+font[i][j]+"</span>"
+			else if (states[i][j] == 3)
+				result += "<span style=\"color: red\">"+font[i][j]+"</span>"
+			else if (states[i][j] == 4)
+				result += "<span style=\"color: blue\">"+font[i][j]+"</span>"
+			else
+				result += font[i][j];
+		}
+		result += "<br>";
+	}
+
+	let was_editable = (data.attribute("contenteditable") != null);
+	if (was_editable)
+		data.removeAttribute("contenteditable");
+
+	data.html(result);
+
+	if (was_editable)
+		data.attribute("contenteditable", "");
+}
