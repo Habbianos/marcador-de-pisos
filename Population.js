@@ -7,45 +7,19 @@
 // A class to describe a population of virtual organisms
 // In this case, each organism is just an instance of a DNA object
 
-function Population(p, m, num) {
+function Population(ma, mu, num) {
 
-	this.timeInitial = new Date().getTime();
-	this.time;
-	this.updateTime = function() {
-		this.time = new Date(new Date().getTime() - this.timeInitial);
-		
-		document.querySelector("#time").innerHTML = this.time.getMinutes() + ":" + this.time.getSeconds() + ":" + this.time.getMilliseconds();
-
-		if (this.time.getTime() < 5000)
-			document.querySelector("#status").innerHTML = "Procurando";
-		else if (this.time.getTime() < 10000)
-			document.querySelector("#status").innerHTML = "Procurando.";
-		else if (this.time.getTime() < 15000)
-			document.querySelector("#status").innerHTML = "Procurando..";
-		else if (this.time.getTime() < 20000)
-			document.querySelector("#status").innerHTML = "Procurando...";
-		else if (this.time.getTime() < 25000)
-			document.querySelector("#status").innerHTML = "Procurando....";
-		
-		if (this.time.getTime() > 30000)
-			document.querySelector("#status").innerHTML = "Procurando....<br>Já se passou um bom tempo, né?!";
-		
-		if (this.time.getTime() > 60000)
-			document.querySelector("#status").innerHTML = "Procurando....<br>Já se passou um bom tempo, né?!<br>Se o resultado atual não for satisfatório, tente recomeçar =)";
-		//console.log(this.time.getHours(), ":", this.time.getMinutes(), ":", this.time.getSeconds(), ":", this.time.getMilliseconds());
-	}
-
-	this.population;                   // Array to hold the current population
-	this.generations = 0;              // Number of generations
-	this.finished = false;             // Are we finished evolving?
-	this.font = p;                     // Font matrix
-	this.mutationRate = m;             // Mutation rate
+	this.population;					// Array to hold the current population
+	this.generations = 0;				// Number of generations
+	this.finished = false;				// Are we finished evolving?
+	this.font = ma;						// Font matrix
+	this.mutationRate = mu;				// Mutation rate
 	//this.perfectScore = 1;
-	this.everPhrase = "";
-	this.everRecord = 0.0;
-	this.everRecordSelect = 0;
-	this.everRecordCovereds = 0;
-	this.everRecordUseless = 0;
+	this.recordMatrix = "";
+	this.recordPts = 0.0;
+	this.recordSelect = 0;
+	this.recordCovereds = 0;
+	this.recordUseless = 0;
 
 	this.best = [];
 
@@ -88,6 +62,8 @@ function Population(p, m, num) {
 
 
 		this.generations++;
+
+		generationsP.html(this.generations)
 	}
 
 	this.pickOne = function() {
@@ -105,7 +81,7 @@ function Population(p, m, num) {
 
 	this.getBest = function() {
 		//return this.best;
-		return this.everPhrase;
+		return this.recordMatrix;
 	}
 
 	// Compute the current "most fit" member of the population
@@ -118,17 +94,18 @@ function Population(p, m, num) {
 				worldrecord = this.population[i].fitness;
 			}
 		}
-		if (worldrecord > this.everRecord) {
-			this.everPhrase = this.population[index].getPhrase();
-			this.everRecord = worldrecord;
-			this.everRecordSelect = this.population[index].calcSelect();
-			this.everRecordCovereds = this.population[index].calcCovereds();
-			this.everRecordUseless = 0;//this.population[index].calcUseless();
+		if (worldrecord >= this.recordPts) {
+			this.recordMatrix = this.population[index].getMatrix();
+			this.recordPts = worldrecord;
+			this.recordSelect = this.population[index].calcSelect();
+			this.recordCovereds = this.population[index].calcCovereds();
+			this.recordUseless = 0;//this.population[index].calcUseless();
 
-			newBetter(font, this.everPhrase, this.everRecordSelect, {t: this.everRecordCovereds, a: wantCovered});
+			if (worldrecord >= solution.pts)
+				newBetter(this.recordPts, font, this.recordMatrix, this.recordSelect, {t: this.recordCovereds, a: wantCovered});
 		}
 
-		this.best = this.population[index].getPhrase();
+		this.best = this.population[index].getMatrix();
 	}
 
 	this.isFinished = function() {
@@ -148,14 +125,14 @@ function Population(p, m, num) {
 		return total / (this.population.length);
 	}
 
-	this.allPhrases = function() {
+	this.allMatrixs = function() {
 		let everything = "";
 		
 		let displayLimit = min(this.population.length,50);
 		
 		
 		for (let i = 0; i < displayLimit; i++) {
-			everything += this.population[i].getPhrase() + "<br>";
+			everything += this.population[i].getMatrix() + "<br>";
 		}
 		return everything;
 	}
