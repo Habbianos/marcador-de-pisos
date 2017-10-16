@@ -54,7 +54,7 @@ function Population(p, m, num) {
 
 	this.population = [];
 	for (let i = 0; i < num; i++) {
-		this.population[i] = new DNA(this.font.length, this.font[0].length);
+		this.population[i] = new DNA();
 	}
 	this.matingPool = [];
 

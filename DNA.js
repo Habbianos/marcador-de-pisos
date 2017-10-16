@@ -19,10 +19,10 @@ function newState() {
 // Constructor (makes a random DNA)
 function DNA(lines, cols) {
 	// The genetic sequence
-	this.genes = new Array(lines);
-	for (let i = 0; i < lines; i++) {
-		this.genes[i] = new Array(cols);
-		for (let j = 0; j < cols; j++) {
+	this.genes = new Array(font.length);
+	for (let i = 0; i < this.genes.length; i++) {
+		this.genes[i] = new Array(font[i].length);
+		for (let j = 0; j < this.genes[i].length; j++) {
 			this.genes[i][j] = font[i][j] == '▩' ? -1 : newState(); // Pick a state to the area
 		}
 	}
@@ -56,7 +56,7 @@ function DNA(lines, cols) {
 		let qtd = 0;
 
 		for (let i = 0; i < this.genes.length; i++) {
-			for (let j = 0; j < this.genes[0].length; j++) {
+			for (let j = 0; j < this.genes[i].length; j++) {
 				if (this.genes[i][j] == 1)
 					qtd++
 			}
@@ -87,7 +87,7 @@ function DNA(lines, cols) {
 		let qtd = 0;
 
 		for (let i = 0; i < this.genes.length; i++) {
-			for (let j = 0; j < this.genes[0].length; j++) {
+			for (let j = 0; j < this.genes[i].length; j++) {
 				if (this.isCovered(i, j)) {
 					qtd++;
 				}
@@ -99,7 +99,7 @@ function DNA(lines, cols) {
 
 	this.reduceUseless = function() {
 		for (let i = 0; i < this.genes.length; i++) {
-			for (let j = 0; j < this.genes[0].length; j++) {
+			for (let j = 0; j < this.genes[i].length; j++) {
 				if (this.genes[i][j] == 1) {
 					let useless = true;
 					this.genes[i][j] = 0;
@@ -126,13 +126,13 @@ function DNA(lines, cols) {
 	// Crossover
 	this.crossover = function(partner) {
 		// A new child
-		let child = new DNA(this.genes.length, this.genes[0].length);
+		let child = new DNA();
 		
 		//var midpoint = floor(random(this.genes.length)); // Pick a midpoint
 		
 		// Half from one, half from the other, formming a grid
 		for (let i = 0; i < this.genes.length; i++) {
-			for (let j = 0; j < this.genes[0].length; j++) {
+			for (let j = 0; j < this.genes[i].length; j++) {
 				if (i % 2 == 0 && j % 2 == 0 || i % 2 != 0 && j % 2 != 0) {
 					child.genes[i][j] = this.genes[i][j];
 				} else {
@@ -147,7 +147,7 @@ function DNA(lines, cols) {
 	// Based on a mutation probability, picks a new random state
 	this.mutate = function(mutationRate) {
 		for (let i = 0; i < this.genes.length; i++) {
-			for (let j = 0; j < this.genes[0].length; j++) {
+			for (let j = 0; j < this.genes[i].length; j++) {
 				if (this.genes[i][j] != -1 && random(1) < mutationRate) {
 					this.genes[i][j] = newState();
 				}

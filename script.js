@@ -134,7 +134,7 @@ function loadinfos() {
 			font[i] = font[i].split("");
 
 		for (let i = 0; i < font.length; i++) {
-			for (let j = 0; j < font[0].length; j++) {
+			for (let j = 0; j < font[i].length; j++) {
 				if (font[i][j] == '◫')
 					wantCovered++;
 			}
