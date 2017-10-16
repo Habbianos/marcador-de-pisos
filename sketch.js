@@ -69,6 +69,9 @@ function setup() {
 		btn_ex[i].mouseClicked(function() {
 			ex(i+1);
 		});
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	});
 
 	btn_copy = select("#copy");
 	btn_copy.mouseClicked(copySolution);
