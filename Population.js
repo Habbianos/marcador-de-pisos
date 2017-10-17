@@ -63,7 +63,7 @@ function Population(ma, mu, num) {
 
 		this.generations++;
 
-		generationsP.html(this.generations)
+		gener_span.html("Foram geradas <b>"+this.generations+"</b> gerações de 200 elementos");
 	}
 
 	this.pickOne = function() {

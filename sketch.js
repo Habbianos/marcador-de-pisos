@@ -39,7 +39,8 @@ let btn_ex = new Array(3),
 	time,
 	qtd_select,
 	qtd_covered,
-	data;
+	data,
+	gener_span;
 
 let calc = false;
 let font;
@@ -56,8 +57,6 @@ let wantCovered,
 
 let time_init;
 
-let generationsP;
-
 function setup() {
 	noCanvas();
 	noLoop();
@@ -69,6 +68,9 @@ function setup() {
 		btn_ex[i].mouseClicked(function() {
 			ex(i+1);
 		});
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	});
 
 	btn_copy = select("#copy");
 	btn_copy.mouseClicked(copySolution);
@@ -99,6 +101,8 @@ function setup() {
 	data.elt.addEventListener("keypress", dataKeypressEvent);
 	observeDOM(data.elt, dataDOMChange);
 
+	gener_span = select("#generation");
+
 	wantCovered = 0;
 
 	solution = {
@@ -106,8 +110,6 @@ function setup() {
 	};
 
 	time_now = 0;
-
-	generationsP = createP();
 }
 
 function draw() {
