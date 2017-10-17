@@ -180,10 +180,53 @@ button.btn-colored:active {
 	text-align: left;
 	border: solid #999;
 	border-width: 0 1px;
-    max-height: 10em;
     font-size: .85em;
+    background-color: #fff;
 }
-#log > span {
+#log > #log-header {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #eee;
+	padding: 3px 5px;
+	color: #555;
+}
+#log > #log-header > * {
+	display: inline-block;
+}
+#log > #log-header > i {
+    padding: 3px 3px 2px 4px;
+    border-radius: 50%;
+    width: 18px;
+	transition: all .4s;
+}
+#log > #log-header > i:hover {
+	cursor: pointer;
+	background-color: rgba(0,0,0,.05);
+}
+#log > #log-header > i:active {
+	background-color: rgba(0,0,0,.1);
+}
+.spacer {
+	flex-grow: 1;
+}
+#log > #log-header > input {
+	font-size: 9pt;
+    height: 22px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 2px 0 2px 3px;
+}
+#log > #log-body {
+    height: 10em;
+    overflow: auto;
+}
+#log > #log-body:empty:before {
+	content: 'Nada aqui, por enquanto.';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#log > #log-body > span {
 	display: block;
     padding-left: 86px;
     padding-right: 10px;
@@ -191,39 +234,39 @@ button.btn-colored:active {
     border: solid 0px;
     margin: 1px 0;
 }
-#log > span:before {
+#log > #log-body > span:before {
 	position: absolute;
     left: 10px;
     font-size: 0.7em;
     color: rgba(0, 0, 0, .5);
 }
-#log > span.log-normal:before {
+#log > #log-body > span.log.normal:before {
 	content: '\f054';
 }
-#log > span.log-start:before {
+#log > #log-body > span.log.start:before {
 	content: '\f04b';
 }
-#log > span.log-new {
+#log > #log-body > span.log.new {
     background-color: rgba(0, 255, 0, .1);
     border-color: rgba(0, 255, 0, .3);
     border-width: 1px 0;
 	color: rgb(0, 210, 0);
 }
-#log > span.log-new:before {
+#log > #log-body > span.log.new:before {
 	content: '\f0f6';
 	color: rgb(0, 210, 0);
 }
-#log > span.log-stop {
+#log > #log-body > span.log.stop {
     background-color: rgba(255,0,0,.1);
     border-color: rgba(255,0,0,.3);
     border-width: 1px 0;
 	color: rgb(240,0,0);
 }
-#log > span.log-stop:before {
+#log > #log-body > span.log.stop:before {
 	content: '\f05e';
 	color: rgb(240,0,0);
 }
-#log > span > .data-timestamp {
+#log > #log-body > span > .data-timestamp {
     color: rgba(0,0,0,.5);
     font-size: .7em;
     /* margin-right: 1em; */

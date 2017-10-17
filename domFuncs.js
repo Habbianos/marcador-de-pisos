@@ -127,3 +127,34 @@ function updateTime() {
 	else if (time_now < 320000)
 		status.html("Procurando.....");
 }
+
+function logInfo(type, text) {
+	if (text != undefined) {
+		var new_log = createSpan(text);
+		new_log.addClass("log");
+		new_log.addClass(type);
+
+		let date = new Date();
+		let timestamp = createSpan(("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2) + ":" + ("00" + date.getMilliseconds()).slice(-3));
+		timestamp.addClass("data-timestamp");
+		new_log.child(timestamp)
+	}
+
+	let logs = selectAll(".log");
+	let max_log = select("#max-logs");
+	while ((Number(max_log.value()) > 0 && logs.length > Number(max_log.value())) || logs.length >= 50) {
+		let removing_log = select(".log");
+		if (removing_log);
+			removing_log.remove();
+		logs = selectAll(".log");
+	}
+
+	if (text != undefined) {
+		select("#log-body").child(new_log);
+	}
+
+	scrollToBottom("log-body");
+}
+function clearLog() {
+	select("#log-body").html("");
+}

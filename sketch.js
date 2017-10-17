@@ -110,6 +110,10 @@ function setup() {
 	};
 
 	time_now = 0;
+
+	select("#clear-log").mouseClicked(clearLog);
+
+	select("#max-logs").changed(logInfo);
 }
 
 function draw() {
