@@ -195,6 +195,7 @@ button.btn-colored:active {
 	position: absolute;
     left: 10px;
     font-size: 0.7em;
+    color: rgba(0, 0, 0, .5);
 }
 #log > span.log-normal:before {
 	content: '\f054';
