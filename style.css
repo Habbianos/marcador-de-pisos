@@ -228,7 +228,8 @@ button.btn-colored:active {
 }
 #log > #log-body > span {
 	display: block;
-    padding-left: 86px;
+	padding-top: 16px;
+    padding-left: 25px;
     padding-right: 10px;
     position: relative;
     border: solid 0px;
@@ -273,6 +274,7 @@ button.btn-colored:active {
     vertical-align: middle;
     /* display: inline-block; */
     position: absolute;
+    top: 0;
     left: 25px;
     font-family: monospace;
 }
