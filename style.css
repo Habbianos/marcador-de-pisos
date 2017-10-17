@@ -4,13 +4,18 @@
 }
 html {height:100%;}
 body {
-	position: relative;
-	min-height:100%;
+	/*position: relative;*/
+	/*min-height:100%;*/
 	background-image: url(https://habboemotion.com/resources/images/homebgs/nl_green_bg.gif);
 	margin: 0;
 	font-family: Sans-serif;
-	padding-top: 10px;
-	padding-bottom: 4em;
+	/*padding-top: 10px;*/
+	/*padding-bottom: 4em;*/
+	display: flex;
+    flex-direction: column;
+}
+header {
+	margin-top: 20px;
 }
 h1, main {
 	filter: drop-shadow(3px 3px 3px rgba(0,0,0,.6));
@@ -22,17 +27,13 @@ h1 {
 }
 main {
 	background-image: linear-gradient(0deg, #eee, white);
-	margin: 0 auto;
+	margin: 20px auto;
 	border-radius: 4px;
 	padding: 15px;
-	max-width: 778px;
+	width: calc(100% - 30px);
+	max-width: 780px;
 	text-align: center;
 	overflow: auto;
-}
-@media screen and ( max-width: 808px ){
-    main {
-        margin: 0 15px;
-    }
 }
 
 
@@ -172,10 +173,10 @@ button.btn-colored:active {
 }
 
 footer {
-	position: absolute;
-	left: 0; bottom: 0;
+	/*position: absolute;
+	left: 0; bottom: 0;*/
 	
-	width: 100%; min-height: 3em;
+	width: 100%; /*min-height: 3em;*/
 	
 	background-color: rgba(20,20,20,.9);
 	color: #888;
@@ -184,6 +185,8 @@ footer {
 	padding: 5px;
 	padding-top: 15px;
 	font-size: .7em;
+
+    margin-top: auto;
 }
 footer a {
 	color: #444;
