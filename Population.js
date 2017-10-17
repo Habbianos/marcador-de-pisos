@@ -94,7 +94,7 @@ function Population(ma, mu, num) {
 				worldrecord = this.population[i].fitness;
 			}
 		}
-		if (worldrecord >= this.recordPts) {
+		if (worldrecord > this.recordPts) {
 			this.recordMatrix = this.population[index].getMatrix();
 			this.recordPts = worldrecord;
 			this.recordSelect = this.population[index].calcSelect();

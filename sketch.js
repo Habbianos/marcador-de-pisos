@@ -157,6 +157,7 @@ function loadinfos() {
 		document.querySelector("#font").innerHTML = font;
 	}
 	if (font != "") {
+		logInfo("start", "Iniciando cálculos.")
 
 		btn_calc.html("Parar");
 		progress.style("width", "100%");
@@ -197,6 +198,8 @@ function loadinfos() {
 
 
 function newBetter(pts, font, matrix, select, covereds) {
+	logInfo("new", "Encontrado nova melhor solução com "+select+" selecionados e "+covereds.t+"/"+covereds.a+" cobertos<!-- após X milissegundos de cálculo-->. <a href=\"#\">Exportar solução</a>.");
+
 	solution = {
 		pts: pts,
 		font: font,

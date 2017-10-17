@@ -43,6 +43,7 @@ function dataDOMChange() {
 		solution = {
 			pts: 0
 		};
+		logInfo("normal", "Novo formato inserido.");
 	}
 };
 // Remove colors
@@ -73,6 +74,8 @@ function btnCalcClicked() {
 	if (this.html() == "Calcular") {
 		loadinfos();
 	} else {
+		logInfo("stop", "Cálculos interrompidos.");
+
 		calc = false;
 		this.html("Calcular");
 		progress.style("width", "0");
