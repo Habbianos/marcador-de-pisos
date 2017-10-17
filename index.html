@@ -23,6 +23,9 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+		<!-- Font Awesome -->
+		<!--<script src="https://use.fontawesome.com/4ee65cdcc7.js"></script>-->
 		
 		<script language="javascript" type="text/javascript" src="sketch.js"></script>
 		<script language="javascript" type="text/javascript" src="Population.js"></script>
@@ -31,6 +34,8 @@
 		<link rel="stylesheet" href="style.css" media="all">
 		<script language="javascript" type="text/javascript" src="domFuncs.js"></script>
 		<script language="javascript" type="text/javascript" src="othersFuncs.js"></script>
+
+		<base target="_blank">
 	</head>
 	<body>
 		<header>
@@ -38,7 +43,24 @@
 		</header>
 		<main>
 			<details>
-				<summary>Instruções</summary>
+				<summary>Descrição do algoritmo</summary>
+				<div class="details-body">
+					<dl>
+						<dt>Objetos</dt>
+						<dd>◫, ◪ e ▩</dd>
+						<dt>Contexto</dt>
+						<dd>Matriz de objetos</dd>
+						<dt>Habilidade</dt>
+						<dd>Selecionar ◫ e ◪</dd>
+						<dt>Regras</dt>
+						<dd>Ao selecionar, apenas os ◫ letarais (horizontais e vertivais) imediatos são cobertos</dd>
+						<dt>Objetivo</dt>
+						<dd>Cobrir todos os ◫, selecionando o mínimo necessário</dd>
+					</dl>
+				</div>
+			</details>
+			<details>
+				<summary>Instruções para o usuário</summary>
 				<div class="details-body">
 					<p>Utilizando os caracteres correspondentes aos tipos de pisos, insira na caixa de texto com borda pontilhada o formato do quarto, explicitando onde é possível que o usuário esteja (piso normal), onde é impossível (piso com mobília) e caso necessário onde existem buracos (impossíveis de serem selecionados).</p>
 					<table>
@@ -53,12 +75,12 @@
 							</tr>
 						</tbody>
 					</table>
-					<p>Este é um <a href="https://pt.wikipedia.org/wiki/Algoritmo_gen%C3%A9tico">algoritmo genético</a>, ou seja, não possui um padrão de busca, portanto é possível que em uma determinada execução ele não encontre o melhor resultado rapidamente - inclusive ele não é capaz de detectar se existe uma solução melhor ou não. Dependendo da complexidade da entrada, vale a pena deixar o código rodando durante algum tempo.</p>
 					<div class="btn-group" role="group" aria-label="Exemplos">
 						<button type="button" class="btn btn-1" data-toggle="tooltip" data-html="true" title="Recorde: <b>4</b> selecionados">Exemplo 1</button>
 						<button type="button" class="btn btn-2" data-toggle="tooltip" data-html="true" title="Recorde: <b>5</b> selecionados">Exemplo 2</button>
 						<button type="button" class="btn btn-3" data-toggle="tooltip" data-html="true" title="Recorde: <b>84</b> selecionados">Exemplo 3</button>
 					</div>
+					<p>Este é um <a href="https://pt.wikipedia.org/wiki/Algoritmo_gen%C3%A9tico">algoritmo genético</a>, ou seja, não possui um padrão de busca, portanto é possível que em uma determinada execução ele não encontre o melhor resultado rapidamente - inclusive ele não é capaz de detectar se existe uma solução melhor ou não. Dependendo da complexidade da entrada, vale a pena deixar o código rodando durante algum tempo.</p>
 				</div>
 			</details>
 			<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -67,8 +89,8 @@
 						Solução
 					</button>
 					<div class="dropdown-menu" aria-labelledby="soluction">
-					    <a id="copy" class="dropdown-item" href="#">Exportar</a>
-					    <a id="paste" class="dropdown-item" href="#">Importar</a>
+						<a id="copy" class="dropdown-item" href="#">Exportar</a>
+						<a id="paste" class="dropdown-item" href="#">Importar</a>
 					</div>
 				</div>
 				<button id="calc" type="button" class="btn btn-colored">Calcular</button>
@@ -82,10 +104,21 @@
 
 			<div class="container"><div id="font" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable></div></div>
 
-			<span id="generation"></span>
+			<details>
+				<summary>Registro de atividade</summary>
+				<div class="details-body">
+					<p>Foram calculadas <b id="generation">0</b> gerações de <em>200 elementos</em> através de reproduções com <em>sobreposição cruzada</em> simples dos genes [falar da propabilidade que os doadores são escolhidos] e taxa de <em>mutação de 1%</em> para cada gene dos descendentes.</p>
+					<div id="log">
+						<span class="log-normal"><span class="data-timestamp">09:20:12:583</span>Novo formato inserido.</span>
+						<span class="log-start"><span class="data-timestamp">09:21:18:005</span>Iniciando cálculos.</span>
+						<span class="log-new"><span class="data-timestamp">09:21:18:740</span>Encontrado nova melhor solução com X selecionados e Y/Z cobertos após 735 milissegundos de cálculo. <a href="#">Exportar solução</a>.</span>
+						<span class="log-stop"><span class="data-timestamp">09:27:45:284</span>Cálculos parados.</span>
+					</div>
+				</div>
+			</details>
 		</main>
 		<footer>
-			O algoritmo foi originalmente escrito por <a href="https://github.com/shiffman">Daniel Shiffman</a> para o livro <a href="http://natureofcode.com/">The Nature of Code</a> e explicado no canal <a href="https://www.youtube.com/user/shiffman">The Coding Train</a>, ambos de sua autoria. Posteriormente foi adaptado por <a href="https://github.com/Alynva">Alisson Nunes</a> como parte do projeto <a href="https://academiawired.blogspot.com.br/">Academia Wired</a> e o código está disponível no <a href="https://github.com/AcademiaWired/Marcador-de-pisos">GitHub</a> do projeto.
+			O algoritmo foi originalmente escrito por <a href="https://github.com/shiffman">Daniel Shiffman</a> para o livro <a href="http://natureofcode.com/">The Nature of Code</a> e explicado no canal <a href="https://www.youtube.com/user/shiffman">The Coding Train</a>, ambos de sua autoria. Posteriormente foi adaptado por <a href="https://github.com/Alynva">Alisson Nunes</a> (<bdi>Alynva</bdi>) como parte do projeto <a href="https://academiawired.blogspot.com.br/">Academia Wired</a> e o código está disponível no <a href="https://github.com/AcademiaWired/Marcador-de-pisos">GitHub</a> do projeto.
 		</footer>
 
 
@@ -119,7 +152,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-	    					<label for="importSoluctionTextarea">Cole aqui o código da solução</label>
+							<label for="importSoluctionTextarea">Cole aqui o código da solução</label>
 							<textarea class="form-control" id="importSoluctionTextarea" rows="3"></textarea>
 						</div>
 					</div>

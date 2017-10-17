@@ -60,9 +60,16 @@ details .details-body {
 	0%    {opacity: 0; transform: translateX(-10px);}
 	100%  {opacity: 1; transform: translateX(0);}
 }
+details .details-body dl {
+	text-align: initial;
+}
+details .details-body dd {
+	margin-left: 40px;
+}
 details .details-body p {
 	text-align: justify;
 	text-indent: 4em;
+	margin-top: 1rem;
 }
 details table {
 	margin: 16px auto;
@@ -168,8 +175,62 @@ button.btn-colored:active {
 	height: 100%;
 	background-color: rgba(0,0,0,.2);
 }
-#generation {
-	font-size: .7em;
+
+#log {
+	text-align: left;
+	border: solid #999;
+	border-width: 0 1px;
+    max-height: 10em;
+    font-size: .85em;
+}
+#log > span {
+	display: block;
+    padding-left: 86px;
+    padding-right: 10px;
+    position: relative;
+    border: solid 0px;
+    margin: 1px 0;
+}
+#log > span:before {
+	position: absolute;
+    left: 10px;
+    font-size: 0.7em;
+}
+#log > span.log-normal:before {
+	content: '\f054';
+}
+#log > span.log-start:before {
+	content: '\f04b';
+}
+#log > span.log-new {
+    background-color: rgba(0, 255, 0, .1);
+    border-color: rgba(0, 255, 0, .3);
+    border-width: 1px 0;
+	color: rgb(0, 210, 0);
+}
+#log > span.log-new:before {
+	content: '\f0f6';
+	color: rgb(0, 210, 0);
+}
+#log > span.log-stop {
+    background-color: rgba(255,0,0,.1);
+    border-color: rgba(255,0,0,.3);
+    border-width: 1px 0;
+	color: rgb(240,0,0);
+}
+#log > span.log-stop:before {
+	content: '\f05e';
+	color: rgb(240,0,0);
+}
+#log > span > .data-timestamp {
+    color: rgba(0,0,0,.5);
+    font-size: .7em;
+    /* margin-right: 1em; */
+    vertical-align: middle;
+    /* display: inline-block; */
+    position: absolute;
+    left: 25px;
+    font-family: monospace;
 }
 
 footer {
