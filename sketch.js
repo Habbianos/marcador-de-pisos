@@ -53,7 +53,7 @@ var allMatrixs;
 var stats;
 
 let wantCovered,
-	solution;
+	solution = [];
 
 let time_init;
 
@@ -73,7 +73,9 @@ function setup() {
 	});
 
 	btn_copy = select("#copy");
-	btn_copy.mouseClicked(copySolution);
+	btn_copy.mouseClicked(function() {
+		copySolution(solution[solution.length - 1]);
+	});
 
 	btn_paste = select("#paste");
 	btn_paste.mouseClicked(function(){
@@ -105,7 +107,7 @@ function setup() {
 
 	wantCovered = 0;
 
-	solution = {
+	solution[0] = {
 		pts: 0
 	};
 
@@ -180,7 +182,7 @@ function loadinfos() {
 
 		popmax = 200;			// Total of population
 		mutationRate = 0.01;	// Value used to randomly mutation
-		solution = {
+		solution[solution.length] = {
 			pts: 0
 		};
 
@@ -198,9 +200,9 @@ function loadinfos() {
 
 
 function newBetter(pts, font, matrix, select, covereds) {
-	logInfo("new", "Encontrado nova melhor solução com "+select+" selecionados e "+covereds.t+"/"+covereds.a+" cobertos<!-- após X milissegundos de cálculo-->. <a href=\"#\">Exportar solução</a>.");
+	logInfo("new", "Encontrado nova melhor solução com "+select+" selecionados e "+covereds.t+"/"+covereds.a+" cobertos<!-- após X milissegundos de cálculo-->. <a href=\"#\" onclick=\"copySolution("+solution.length+")\">Exportar solução</a>.");
 
-	solution = {
+	solution[solution.length] = {
 		pts: pts,
 		font: font,
 		matrix: matrix,

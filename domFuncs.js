@@ -40,7 +40,7 @@ function dataDOMChange() {
 		data.attribute("editing", "");
 		
 		removeSpans();
-		solution = {
+		solution[solution.length] = {
 			pts: 0
 		};
 		logInfo("normal", "Novo formato inserido.");
@@ -52,21 +52,21 @@ function removeSpans() {
 }
 
 // Export the actual solution
-function copySolution() {
-	if (copyTextToClipboard(JSON.stringify(solution))) {
+function copySolution(solution_id) {
+	if (copyTextToClipboard(JSON.stringify(solution[solution_id]))) {
 		select("#exportSoluctionModalLabel").html("Cópia da solução realizada com sucesso");
-		select(".modal-body", "#exportSoluctionModal").html("<p>O código da solução encontrada foi copiado para sua área de transferência. Caso não esteja, aqui está o código:</p><pre><code>"+JSON.stringify(solution)+"</code></pre>");
+		select(".modal-body", "#exportSoluctionModal").html("<p>O código da solução encontrada foi copiado para sua área de transferência. Caso não esteja, aqui está o código:</p><pre><code>"+JSON.stringify(solution[solution_id])+"</code></pre>");
 	} else {
 		select("#exportSoluctionModalLabel").html("Cópia da solução falhou");
-		select(".modal-body", "#exportSoluctionModal").html("<p>Infelimznete o seu navegador não suporta cópia de texto via JavaScript. Selecione o código da solução a seguir e copie você mesmo:</p><pre><code>"+JSON.stringify(solution)+"</code></pre>");
+		select(".modal-body", "#exportSoluctionModal").html("<p>Infelimznete o seu navegador não suporta cópia de texto via JavaScript. Selecione o código da solução a seguir e copie você mesmo:</p><pre><code>"+JSON.stringify(solution[solution_id])+"</code></pre>");
 	}
 	$("#exportSoluctionModal").modal("show");
 }
 
 // Import the solution
 function pasteSolution() {
-	solution = JSON.parse(document.querySelector("#importSoluctionTextarea").value);
-	newBetter(solution.font, solution.matrix, solution.select, solution.covereds);
+	solution[solution.length] = JSON.parse(document.querySelector("#importSoluctionTextarea").value);
+	newBetter(solution[solution.length - 1].font, solution[solution.length - 1].matrix, solution[solution.length - 1].select, solution[solution.length - 1].covereds);
 }
 
 // Start the calcs, or stop

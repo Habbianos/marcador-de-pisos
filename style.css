@@ -217,7 +217,8 @@ button.btn-colored:active {
     padding: 2px 0 2px 3px;
 }
 #log > #log-body {
-    height: 10em;
+    min-height: 10em;
+    max-height: 30em;
     overflow: auto;
 }
 #log > #log-body:empty:before {

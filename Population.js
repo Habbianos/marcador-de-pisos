@@ -101,7 +101,7 @@ function Population(ma, mu, num) {
 			this.recordCovereds = this.population[index].calcCovereds();
 			this.recordUseless = 0;//this.population[index].calcUseless();
 
-			if (worldrecord >= solution.pts)
+			if (worldrecord >= solution[solution.length - 1].pts)
 				newBetter(this.recordPts, font, this.recordMatrix, this.recordSelect, {t: this.recordCovereds, a: wantCovered});
 		}
 
