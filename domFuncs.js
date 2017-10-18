@@ -36,19 +36,25 @@ function dataKeypressEvent(event) {
 };
 // Fired when the DOM of data change and call removeSpans()
 function dataDOMChange() {
-	if (data.attribute("contenteditable") != null && data.attribute("editing") == null) {
+	if (data.attribute("contenteditable") != null && data.attribute("editing") == null && data.attribute("colored") != null && data.html() != "") {
+
+		logInfo("normal", "Novo formato inserido.");
+
 		data.attribute("editing", "");
-		
+
 		removeSpans();
 		solution[solution.length] = {
 			pts: 0
 		};
-		logInfo("normal", "Novo formato inserido.");
 	}
 };
 // Remove colors
 function removeSpans() {
-	data.html(data.html().replace(/<span\s*\w*.*?>|<\/span>/gm, ""));
+	if (data.attribute("colored") != null) {
+		logInfo("stop", "Coloração removida.");
+		data.html(data.html().replace(/<span\s*\w*.*?>|<\/span>/gm, ""));
+		data.removeAttribute("colored");
+	}
 }
 
 // Export the actual solution
@@ -61,12 +67,20 @@ function copySolution(solution_id) {
 		select(".modal-body", "#exportSoluctionModal").html("<p>Infelimznete o seu navegador não suporta cópia de texto via JavaScript. Selecione o código da solução a seguir e copie você mesmo:</p><pre><code>"+JSON.stringify(solution[solution_id])+"</code></pre>");
 	}
 	$("#exportSoluctionModal").modal("show");
+	logInfo("normal", "Solução exportada.");
 }
 
 // Import the solution
 function pasteSolution() {
+	if (btn_calc.html() == "Parar") {
+		btn_calc.elt.click();
+	}
+
 	solution[solution.length] = JSON.parse(document.querySelector("#importSoluctionTextarea").value);
-	newBetter(solution[solution.length - 1].font, solution[solution.length - 1].matrix, solution[solution.length - 1].select, solution[solution.length - 1].covereds);
+
+	logInfo("normal", "Solução importada.");
+
+	newBetter(solution[solution.length - 1].pts, solution[solution.length - 1].font, solution[solution.length - 1].matrix, solution[solution.length - 1].select, solution[solution.length - 1].covereds);
 }
 
 // Start the calcs, or stop
@@ -87,18 +101,26 @@ function btnCalcClicked() {
 }
 
 function btnCleanClicked() {
-	if (btn_calc.html() == "Parar") {
-		btn_calc.elt.click();
+	if (data.html() != "" || time.html() != "" || qtd_select.html() != "" || qtd_covered.html() != "" || gener_span.html() != "0") {
+		if (btn_calc.html() == "Parar") {
+			btn_calc.elt.click();
+		}
+
+		data.html("");
+
+		setTimeout(function() {
+			time.html("");
+			qtd_select.html("");
+			qtd_covered.html("");
+			gener_span.html("0");
+		}, 100);
+
+		data.removeAttribute("editing");
+
+		logInfo("stop", "Informações removidas.");
+	} else {
+		logInfo("stop", "As informações já foram removidas.");
 	}
-
-	data.html("");
-
-	setTimeout(function() {
-		time.html("");
-		qtd_select.html("");
-		qtd_covered.html("");
-		gener_span.html("");
-	}, 100);
 }
 
 function formatTime(t, n) {
@@ -160,4 +182,5 @@ function logInfo(type, text) {
 }
 function clearLog() {
 	select("#log-body").html("");
+	logInfo("normal", "Registros excluídos.");
 }

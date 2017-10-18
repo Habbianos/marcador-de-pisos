@@ -74,7 +74,7 @@ function setup() {
 
 	btn_copy = select("#copy");
 	btn_copy.mouseClicked(function() {
-		copySolution(solution[solution.length - 1]);
+		copySolution(solution.length - 1);
 	});
 
 	btn_paste = select("#paste");
@@ -195,6 +195,8 @@ function loadinfos() {
 		loop();
 
 		time_init = new Date().getTime();
+	} else {
+		logInfo("stop", "A caixa de texto está vazia.");
 	}
 }
 
@@ -287,7 +289,15 @@ function newBetter(pts, font, matrix, select, covereds) {
 		}
 	}
 
-	// Transform the states into colors
+
+	data.removeAttribute("editing");
+
+	data.attribute("colored", "");
+
+	data.html(genStringColored(font, states));
+}
+
+function genStringColored(font, states) {
 	let result = "";
 	for (let i = 0; i < states.length; i++) {
 		for (let j = 0; j < states[i].length; j++) {
@@ -304,13 +314,5 @@ function newBetter(pts, font, matrix, select, covereds) {
 		}
 		result += "<br>";
 	}
-
-	let was_editable = (data.attribute("contenteditable") != null);
-	if (was_editable)
-		data.removeAttribute("contenteditable");
-
-	data.html(result);
-
-	if (was_editable)
-		data.attribute("contenteditable", "");
+	return result
 }
