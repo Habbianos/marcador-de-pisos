@@ -68,8 +68,10 @@ details .details-body dd {
 }
 details .details-body p {
 	text-align: justify;
-	text-indent: 4em;
 	margin-top: 1rem;
+}
+details .details-body p:not(.no-ident) {
+	text-indent: 4em;
 }
 details table {
 	margin: 16px auto;
@@ -278,6 +280,9 @@ button.btn-colored:active {
     top: 0;
     left: 25px;
     font-family: monospace;
+}
+i.math {
+	font-family: cursive;
 }
 
 footer {
