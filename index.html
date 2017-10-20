@@ -26,6 +26,9 @@
 
 		<!-- Font Awesome -->
 		<script src="https://use.fontawesome.com/4ee65cdcc7.js"></script>
+
+		<!-- Vis.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.1/vis.min.js"></script>
 		
 		<script language="javascript" type="text/javascript" src="sketch.js"></script>
 		<script language="javascript" type="text/javascript" src="Population.js"></script>
@@ -117,6 +120,7 @@
 					<p>Foram calculadas <b id="generation">0</b> gerações de <em>200 elementos</em> através de reproduções com <em>sobreposição cruzada</em> simples dos genes de pares de elementos e taxa de <em>mutação de 1%</em> para cada gene dos descendentes. Os pares de elementos são escolhidos aleatóriamente com uma probabilidade de</p>
 					$$p = \left({{\left({10 \over {s + 1}}\right)^4 + 10c^4} \over {a \space l}}\right)^4$$
 					<p class="no-ident">, onde \(s\) é o número de objetos selecionados, \(c\) é o número de objetos cobertos, \(a\) é a altura da matriz e \(l\) é a largura da primeira linha matriz.</p>
+					<div id="visualization"></div>
 				</div>
 			</details>
 		</main>

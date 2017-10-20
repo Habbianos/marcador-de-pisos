@@ -94,15 +94,15 @@ function Population(ma, mu, num) {
 				worldrecord = this.population[i].fitness;
 			}
 		}
-		if (worldrecord > this.recordPts) {
-			this.recordMatrix = this.population[index].getMatrix();
+		if (worldrecord >= this.recordPts) {
+			/*this.recordMatrix = this.population[index].getMatrix();*/
 			this.recordPts = worldrecord;
-			this.recordSelect = this.population[index].calcSelect();
+			/*this.recordSelect = this.population[index].calcSelect();
 			this.recordCovereds = this.population[index].calcCovereds();
-			this.recordUseless = 0;//this.population[index].calcUseless();
+			this.recordUseless = 0;//this.population[index].calcUseless();*/
 
 			if (worldrecord >= solution[solution.length - 1].pts)
-				newBetter(this.recordPts, font, this.recordMatrix, this.recordSelect, {t: this.recordCovereds, a: wantCovered});
+				newBetter(this.recordPts);
 		}
 
 		this.best = this.population[index].getMatrix();

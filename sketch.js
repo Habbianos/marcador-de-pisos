@@ -57,9 +57,44 @@ let wantCovered,
 
 let time_init;
 
+let cycles = 10,
+	popmax_p_cycle = 1000,
+	mutationRate_range = [],
+	mutationRate_step,
+	mutationRate_index,
+	popmax_range = [],
+	popmax_step,
+	popmax_index,
+	pts_max,
+	pts_media_n,
+	pts_media_sum,
+	z_value = [];
+
+
+let points,			// Create and populate a data table.
+	counter,		// create some nice looking data with sin/cos
+	options,		// specify options
+	container,		// Instantiate our graph object.
+	graph3d;
+
 function setup() {
 	noCanvas();
 	noLoop();
+
+	mutationRate = 0.01;																	// Value used to randomly mutation
+	mutationRate_range = [mutationRate - mutationRate/2, mutationRate + mutationRate/2];	// [0.005..0.015]
+	mutationRate_step = (mutationRate_range[1] - mutationRate_range[0]) / 10;				// 0.001
+	mutationRate_index = 0;																	// [0..9]
+	popmax = 200;																			// Total of population
+	popmax_range = [popmax - popmax/2, popmax + popmax/2];									// [100..300]
+	popmax_step = (popmax_range[1] - popmax_range[0]) / 10;									// 10
+	popmax_index = 0;																		// [0..9]
+	pts_max = 0;
+	pts_media_n = 0;																		// 0~9
+	pts_media_sum = 0;
+	for (let i = 0; i < 10; i++)
+		z_value[i] = [];
+
 
 	btn_ex[0] = select(".btn-1");
 	btn_ex[1] = select(".btn-2");
@@ -116,12 +151,31 @@ function setup() {
 	select("#clear-log").mouseClicked(clearLog);
 
 	select("#max-logs").changed(logInfo);
+
+
+
+	// Vis.js initialization
+	points = new vis.DataSet();
+	counter = 0;
+	points.add({id:counter++, x:0, y:0, z:0})
+	options = {
+		width:  '500px',
+		height: '250px',
+		style: 'surface',
+		showPerspective: true,
+		showGrid: true,
+		showShadow: false,
+		keepAspectRatio: true,
+		verticalRatio: 0.5
+	};
+	container = select("#visualization").elt;
+	graph3d = new vis.Graph3d(container, points, options);
 }
 
 function draw() {
 	if (calc) {
 		// Refresh the timer
-		updateTime();
+		//updateTime();
 
 		//Create next generation
 		population.generate();
@@ -132,8 +186,52 @@ function draw() {
 		population.evaluate();
 
 		// If we found the target matrix, stop
-		if (population.isFinished()) {
-			noLoop();
+		if (population.getGenerations() >= popmax_p_cycle) {
+			pts_media_n++;
+			pts_media_sum += pts_max;
+
+			logInfo("normal", "Ciclo de "+popmax_p_cycle+" gerações atingido, faltam "+(cycles-pts_media_n)+" ciclo"+(cycles-pts_media_n!=1?"s":"")+"."+
+				"<br>pts_max: "+pts_max);
+
+			if (pts_media_n >= cycles) {
+				z_value[mutationRate_index][popmax_index] = pts_media_sum / pts_media_n;
+				
+				points.add({
+					id: counter++,
+					x: (mutationRate_range[0]+(mutationRate_index+1)*mutationRate_step),
+					y: (popmax_range[0]+(popmax_index+1)*popmax_step),
+					z: z_value[mutationRate_index][popmax_index]
+				});
+
+				logInfo("new", "Completou as 10 populações com média de "+z_value[mutationRate_index][popmax_index]+
+					"<br>mutationRate["+mutationRate_index+"]: "+(mutationRate_range[0]+(mutationRate_index+1)*mutationRate_step)+
+					"<br>popmax["+popmax_index+"]: "+(popmax_range[0]+(popmax_index+1)*popmax_step));
+
+				pts_media_n = 0;
+				pts_media_sum = 0;
+
+				mutationRate_index++;
+
+				if (mutationRate_range[0] + (mutationRate_index+1)*mutationRate_step > mutationRate_range[1]) {
+					popmax_index++;
+					mutationRate_index = 0;
+
+				}
+
+				if (mutationRate_range[0] + (mutationRate_index+1)*mutationRate_step > mutationRate_range[1] && popmax_range[0] + (popmax_index+1)*popmax_step > popmax_range[1]) {
+					logInfo("stop", "Atingiu o fim do intervalo.");
+					noLoop();
+					return;
+				}
+			}
+
+			pts_max = 0;
+			population = new Population(font, mutationRate_range[0] + (mutationRate_index+1)*mutationRate_step, popmax_range[0] + (popmax_index+1)*popmax_step);
+
+			solution = [];
+			solution[solution.length] = {
+				pts: 0
+			};
 		}
 
 	} else {
@@ -180,14 +278,13 @@ function loadinfos() {
 			}
 		}
 
-		popmax = 200;			// Total of population
-		mutationRate = 0.01;	// Value used to randomly mutation
 		solution[solution.length] = {
 			pts: 0
 		};
+		pts_max = 0;
 
 		// Create a population with the font matrix, mutation rate, and population max
-		population = new Population(font, mutationRate, popmax);
+		population = new Population(font, mutationRate_range[mutationRate_index], popmax_range[popmax_index]);
 
 
 		// Start the calcs
@@ -201,7 +298,10 @@ function loadinfos() {
 }
 
 
-function newBetter(pts, font, matrix, select, covereds) {
+function newBetter(pts) {
+	if (pts > pts_max)
+		pts_max = pts;
+	/*
 	logInfo("new", "Encontrado nova melhor solução com "+select+" selecionados e "+covereds.t+"/"+covereds.a+" cobertos<!-- após X milissegundos de cálculo-->. <a href=\"#\" onclick=\"copySolution("+solution.length+")\">Exportar solução</a>.");
 
 	solution[solution.length] = {
@@ -294,7 +394,7 @@ function newBetter(pts, font, matrix, select, covereds) {
 
 	data.attribute("colored", "");
 
-	data.html(genStringColored(font, states));
+	data.html(genStringColored(font, states));*/
 }
 
 function genStringColored(font, states) {
