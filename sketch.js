@@ -57,8 +57,9 @@ let wantCovered,
 
 let time_init;
 
-let cycles = 10,
-	popmax_p_cycle = 1000,
+let division_xyz,
+	cycles,
+	popmax_p_cycle,
 	mutationRate_range = [],
 	mutationRate_step,
 	mutationRate_index,
@@ -81,18 +82,21 @@ function setup() {
 	noCanvas();
 	noLoop();
 
+	division_xyz = 2;
+	cycles = 2;
+	popmax_p_cycle = 200;
 	mutationRate = 0.01;																	// Value used to randomly mutation
 	mutationRate_range = [mutationRate - mutationRate/2, mutationRate + mutationRate/2];	// [0.005..0.015]
-	mutationRate_step = (mutationRate_range[1] - mutationRate_range[0]) / 10;				// 0.001
+	mutationRate_step = (mutationRate_range[1] - mutationRate_range[0]) / division_xyz;				// 0.001
 	mutationRate_index = 0;																	// [0..9]
 	popmax = 200;																			// Total of population
 	popmax_range = [popmax - popmax/2, popmax + popmax/2];									// [100..300]
-	popmax_step = (popmax_range[1] - popmax_range[0]) / 10;									// 10
+	popmax_step = (popmax_range[1] - popmax_range[0]) / division_xyz;									// 10
 	popmax_index = 0;																		// [0..9]
 	pts_max = 0;
 	pts_media_n = 0;																		// 0~9
 	pts_media_sum = 0;
-	for (let i = 0; i < 10; i++)
+	for (let i = 0; i < division_xyz; i++)
 		z_value[i] = [];
 
 
@@ -162,6 +166,7 @@ function setup() {
 		width:  '500px',
 		height: '250px',
 		style: 'surface',
+		tooltip: true,
 		showPerspective: true,
 		showGrid: true,
 		showShadow: false,
@@ -195,6 +200,8 @@ function draw() {
 
 			if (pts_media_n >= cycles) {
 				z_value[mutationRate_index][popmax_index] = pts_media_sum / pts_media_n;
+
+				console.log(mutationRate_index, popmax_index, z_value);
 				
 				points.add({
 					id: counter++,
@@ -203,30 +210,40 @@ function draw() {
 					z: z_value[mutationRate_index][popmax_index]
 				});
 
-				logInfo("new", "Completou as 10 populações com média de "+z_value[mutationRate_index][popmax_index]+
-					"<br>mutationRate["+mutationRate_index+"]: "+(mutationRate_range[0]+(mutationRate_index+1)*mutationRate_step)+
-					"<br>popmax["+popmax_index+"]: "+(popmax_range[0]+(popmax_index+1)*popmax_step));
+				logInfo("new", "Completou as "+cycles+" populações com média de "+z_value[mutationRate_index][popmax_index]+
+					"<br>mutationRate["+mutationRate_index+"]: "+(mutationRate_range[0]+(mutationRate_index)*mutationRate_step)+
+					"<br>popmax["+popmax_index+"]: "+(popmax_range[0]+(popmax_index)*popmax_step));
 
 				pts_media_n = 0;
 				pts_media_sum = 0;
 
 				mutationRate_index++;
 
-				if (mutationRate_range[0] + (mutationRate_index+1)*mutationRate_step > mutationRate_range[1]) {
+				if (mutationRate_range[0] + (mutationRate_index)*mutationRate_step >= mutationRate_range[1]) {
 					popmax_index++;
-					mutationRate_index = 0;
-
 				}
 
-				if (mutationRate_range[0] + (mutationRate_index+1)*mutationRate_step > mutationRate_range[1] && popmax_range[0] + (popmax_index+1)*popmax_step > popmax_range[1]) {
+				if (mutationRate_range[0] + (mutationRate_index)*mutationRate_step >= mutationRate_range[1] && popmax_range[0] + (popmax_index)*popmax_step >= popmax_range[1]) {
 					logInfo("stop", "Atingiu o fim do intervalo.");
+					let response = {
+						mutationRate_range_0: mutationRate_range[0],
+						mutationRate_step: mutationRate_step,
+						popmax_range_0: popmax_range[0],
+						popmax_step: popmax_step,
+						z_value: z_value
+					}
+					select("body").html(JSON.stringify(response));
 					noLoop();
 					return;
+				}
+
+				if (mutationRate_range[0] + (mutationRate_index)*mutationRate_step >= mutationRate_range[1]) {
+					mutationRate_index = 0;
 				}
 			}
 
 			pts_max = 0;
-			population = new Population(font, mutationRate_range[0] + (mutationRate_index+1)*mutationRate_step, popmax_range[0] + (popmax_index+1)*popmax_step);
+			population = new Population(font, mutationRate_range[0] + (mutationRate_index)*mutationRate_step, popmax_range[0] + (popmax_index)*popmax_step);
 
 			solution = [];
 			solution[solution.length] = {
