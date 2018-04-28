@@ -4,13 +4,9 @@
 }
 html {height:100%;}
 body {
-	/*position: relative;*/
-	/*min-height:100%;*/
 	background-image: url(https://habboemotion.com/resources/images/homebgs/nl_green_bg.gif);
 	margin: 0;
 	font-family: Sans-serif;
-	/*padding-top: 10px;*/
-	/*padding-bottom: 4em;*/
 	display: flex;
     flex-direction: column;
 }
@@ -86,7 +82,6 @@ details tr td:not(:first-child) {
 button.btn-colored {
 	color: white;
 	background-color: #6c9833 !important;
-	/*background-image: linear-gradient(to bottom, #4a731f, #4d6f29);*/
 	transition: background .4s;
 }
 
@@ -94,7 +89,6 @@ button.btn-colored:hover {
 	cursor: pointer;
 	background-color: #396c11 !important;
 	border-color: #23420a;
-	/*background-image: linear-gradient(to bottom, #264e00, #1c3800);*/
 }
 button.btn-colored:active {
 	background-color: #2b4d11 !important;
@@ -145,6 +139,7 @@ button.btn-colored:active {
 }
 
 .container {
+	padding: 15px;
 	max-width: 100%;
 	overflow: auto;
 }
@@ -274,9 +269,7 @@ button.btn-colored:active {
 #log > #log-body > span > .data-timestamp {
     color: rgba(0,0,0,.5);
     font-size: .7em;
-    /* margin-right: 1em; */
     vertical-align: middle;
-    /* display: inline-block; */
     position: absolute;
     top: 0;
     left: 25px;
@@ -290,10 +283,7 @@ i.math {
 }
 
 footer {
-	/*position: absolute;
-	left: 0; bottom: 0;*/
-	
-	width: 100%; /*min-height: 3em;*/
+	width: 100%;
 	
 	background-color: rgba(20,20,20,.9);
 	color: #888;
@@ -306,5 +296,5 @@ footer {
     margin-top: auto;
 }
 footer a {
-	color: #444;
+	color: #0056b3;
 }
