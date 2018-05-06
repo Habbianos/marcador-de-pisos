@@ -327,6 +327,6 @@ function genStringColored(font, states) {
 			 .replace('4', 'blue')
 		    ) : e
 		}
-	    ).join('')
+	    ).join('').concat('<br>')
 	).join('')
 }
