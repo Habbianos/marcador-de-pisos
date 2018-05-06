@@ -298,21 +298,35 @@ function newBetter(pts, font, matrix, select, covereds) {
 }
 
 function genStringColored(font, states) {
-	let result = "";
-	for (let i = 0; i < states.length; i++) {
-		for (let j = 0; j < states[i].length; j++) {
-			if (states[i][j] == 1)
-				result += "<span style=\"color: green\">"+font[i][j]+"</span>"
-			else if (states[i][j] == 2)
-				result += "<span style=\"color: orange\">"+font[i][j]+"</span>"
-			else if (states[i][j] == 3)
-				result += "<span style=\"color: red\">"+font[i][j]+"</span>"
-			else if (states[i][j] == 4)
-				result += "<span style=\"color: blue\">"+font[i][j]+"</span>"
-			else
-				result += font[i][j];
+// 	let result = "";
+// 	for (let i = 0; i < states.length; i++) {
+// 		for (let j = 0; j < states[i].length; j++) {
+// 			if (states[i][j] == 1)
+// 				result += "<span style=\"color: green\">"+font[i][j]+"</span>"
+// 			else if (states[i][j] == 2)
+// 				result += "<span style=\"color: orange\">"+font[i][j]+"</span>"
+// 			else if (states[i][j] == 3)
+// 				result += "<span style=\"color: red\">"+font[i][j]+"</span>"
+// 			else if (states[i][j] == 4)
+// 				result += "<span style=\"color: blue\">"+font[i][j]+"</span>"
+// 			else
+// 				result += font[i][j];
+// 		}
+// 		result += "<br>";
+// 	}
+// 	return result
+	return font.map(
+	    (c, i) => c.map(
+		(e, j) => {
+		    return states[i][j] ? (
+			(
+			    `<span style="color: ${states[i][j]}">${e}</span>`
+			).replace('1', 'green')
+			 .replace('2', 'orange')
+			 .replace('3', 'red')
+			 .replace('4', 'blue')
+		    ) : e
 		}
-		result += "<br>";
-	}
-	return result
+	    ).join('')
+	).join('')
 }
