@@ -10,7 +10,7 @@ const port = process.argv[2] || 9000
 const app = express()
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/../public`))
 
 const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`)
