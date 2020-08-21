@@ -1,0 +1,1 @@
+curl -X PUT localhost:9000/stopServer
