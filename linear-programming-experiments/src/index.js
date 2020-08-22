@@ -16,7 +16,7 @@ const server = app.listen(port, () => {
 
 app.post('/solve', (req, res) => {
   const {adjList} = req.body
-  const file = 'adjMatrix.txt'
+  const file = 'adjList.txt'
   const python = os.platform() == 'win32' ? 'py' : 'python3'
   fs.writeFileSync(file, JSON.stringify(adjList))
   exec(`${python} solve.py ${file}`, (err, stdout) => {
