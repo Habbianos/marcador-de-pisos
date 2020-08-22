@@ -24,22 +24,27 @@ function solveLPSolver() {
     }
   })
 
-  const res = solver.Solve(model)
+  const worker = new Worker('solveLPSolverWorker.js')
 
-  updateOutput(`
-    Feasible: ${res.feasible}
-    Result: ${res.result}
-    Time: ${performance.now() - start} ms
-    Bounded: ${res.bounded}
-    Is integral: ${res.isIntegral}
-    Solution:
-    ${parseSolution(res, n)}
-  `)
+  worker.onmessage = res => {
+    const {data} = res
+    updateOutput(`
+      Feasible: ${data.feasible}
+      Result: ${data.result}
+      Time: ${performance.now() - start} ms
+      Bounded: ${data.bounded}
+      Is integral: ${data.isIntegral}
+      Solution:
+      ${parseSolution(data, n)}
+    `)
 
-  function parseSolution(res, n) {
-    let sol = []
-    for(let i = 0; i < adjList.length; i++)
-      sol[i] = res[i] ? res[i] : 0
-    return arrayToStringMatrix(sol, n)
+    function parseSolution(data, n) {
+      let sol = []
+      for(let i = 0; i < adjList.length; i++)
+        sol[i] = data[i] ? data[i] : 0
+      return arrayToStringMatrix(sol, n)
+    }
   }
+
+  worker.postMessage(model)
 }
