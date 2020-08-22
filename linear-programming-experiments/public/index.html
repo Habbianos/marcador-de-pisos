@@ -13,14 +13,17 @@
 <button onclick="solveORTools()">OR-Tools</button>
 <button onclick="solveLPSolver()">LP Solver</button>
 <button onclick="solveGreedy()">Greedy</button>
+<button onclick="solveGLPK()">GLPK</button>
 <pre id="output"></pre>
 
 <script src="https://unpkg.com/javascript-lp-solver/prod/solver.js"></script>
+<script src="lib/glpk.min.js"></script>
 
 <script src="mapManager.js"></script>
 <script src="solveORTools.js"></script>
 <script src="solveLPSolver.js"></script>
 <script src="solveGreedy.js"></script>
+<script src="solveGLPK.js"></script>
 
 <script>
   const input = document.querySelector('#input')
