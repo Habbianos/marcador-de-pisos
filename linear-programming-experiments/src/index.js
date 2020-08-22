@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const os = require('os')
 const {exec} = require('child_process')
-const builder = require('./mapManager')
 
 const port = process.argv[2] || 9000
 const app = express()
@@ -16,12 +15,10 @@ const server = app.listen(port, () => {
 })
 
 app.post('/solve', (req, res) => {
-  const adjMatrix = builder.buildAdjListFromTest({
-    mapTypes: req.body.matrix
-  })
+  const {adjList} = req.body
   const file = 'adjMatrix.txt'
   const python = os.platform() == 'win32' ? 'py' : 'python3'
-  fs.writeFileSync(file, JSON.stringify(adjMatrix))
+  fs.writeFileSync(file, JSON.stringify(adjList))
   exec(`${python} solve.py ${file}`, (err, stdout) => {
     if(err) {
       console.log(err)
