@@ -10,11 +10,15 @@
 
 <textarea id="input"></textarea>
 <br/><br/>
-<button onclick="solveORTools()">Solve</button>
+<button onclick="solveORTools()">OR-Tools</button>
+<button onclick="solveLPSolver()">LP Solver</button>
 <pre id="output"></pre>
+
+<script src="https://unpkg.com/javascript-lp-solver/prod/solver.js"></script>
 
 <script src="mapManager.js"></script>
 <script src="solveORTools.js"></script>
+<script src="solveLPSolver.js"></script>
 
 <script>
   const input = document.querySelector('#input')
@@ -22,35 +26,17 @@
 
   input.value = '◫◪◫◫◫\n◫◫▩◪◫'
 
-  function clearOutput() {
-    output.textContent = ''
-  }
-
   function getAdjListFromInput() {
     const inputValue = input.value.split('\n')
       .map(s => s.replace(/\s/g, ''))
       .filter(s => s != '')
     let matrix = inputValue
-    if(inputValue[0][0] == '[') // if the input string is in array format
+    if(inputValue[0][0] == '[') // if the input string is in array of chars format
       matrix = JSON.parse(inputValue.join(''))
     return {
       adjList: buildAdjListFromTest({mapTypes: matrix}),
       n: matrix[0].length
     }
-  }
-
-  function updateOutput({success, numVariables, numConstraints, time, iterations, branchAndBoundNodes, objectiveValue, solution}, n) {
-    output.textContent = `
-      Success: ${success}
-      Objective value: ${objectiveValue}
-      Time: ${time} ms
-      Variables: ${numVariables}
-      Constraints: ${numConstraints}
-      Iterations: ${iterations}
-      Branch and Bound nodes: ${branchAndBoundNodes}
-      Solution: 
-      ${arrayToStringMatrix(solution, n)}
-    `.replace(/^\s+|\s+$/gm, '')
   }
 
   function arrayToStringMatrix(v, n) {
@@ -63,6 +49,14 @@
       }
     }
     return res
+  }
+
+  function clearOutput() {
+    output.textContent = ''
+  }
+
+  function updateOutput(newContent) {
+    output.textContent = newContent.replace(/^\s+|\s+$/gm, '')
   }
 
 </script>
