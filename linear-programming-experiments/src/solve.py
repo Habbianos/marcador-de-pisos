@@ -5,29 +5,16 @@ import json
 solver = pywraplp.Solver.CreateSolver('solve :D', 'CBC')
 
 with open(sys.argv[1], 'r') as file:
-    A = json.loads(file.read())
-m = len(A)
-n = len(A[0])
+    adj = json.loads(file.read())
+n = len(adj)
 x = {}
+
 for j in range(n):
     x[j] = solver.IntVar(0.0, 1, 'x[%i]' % j)
 
-# for i in range(m):
-#     if sum(A[i]) > 0:
-#         constraint_expr = [A[i][j] * x[j] for j in range(n)]
-#         solver.Add(sum(constraint_expr) >= 1)
-
-# very faster than the above :D
-for i in range(m):
-    if sum(A[i]) > 0:
-        filteredA = []
-        filteredX = []
-        for j in range(n):
-            if(A[i][j] != 0):
-                filteredA.append(A[i][j])
-                filteredX.append(x[j])
-        constraint_expr = [filteredA[j] * filteredX[j] for j in range(len(filteredA))]
-        solver.Add(sum(constraint_expr) >= 1)
+for row in adj:
+    if row:
+        solver.Add(sum([1 * x[j] for j in row]) >= 1)
 
 solver.Minimize(solver.Sum([1 * x[j] for j in range(n)]))
 

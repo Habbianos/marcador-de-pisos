@@ -16,12 +16,12 @@ const server = app.listen(port, () => {
 })
 
 app.post('/solve', (req, res) => {
-  const equMatrix = builder.buildMapMatrixFromTest({
+  const adjMatrix = builder.buildAdjListFromTest({
     mapTypes: req.body.matrix
   })
-  const file = 'equMatrix.txt'
+  const file = 'adjMatrix.txt'
   const python = os.platform() == 'win32' ? 'py' : 'python3'
-  fs.writeFileSync(file, JSON.stringify(equMatrix))
+  fs.writeFileSync(file, JSON.stringify(adjMatrix))
   exec(`${python} solve.py ${file}`, (err, stdout) => {
     if(err) {
       console.log(err)

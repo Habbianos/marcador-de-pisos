@@ -41,6 +41,11 @@ const TileState = {
  */
 
 /**
+ * @typedef AdjList
+ * @type {number[][]}
+ */
+
+/**
  * @function buildMapFromTest
  * @param {MapTest} mapTest 
  * @returns {MapMatrix}
@@ -80,6 +85,47 @@ function buildMapMatrixFromTest(mapTest) {
 	return map
 }
 
+/**
+ * @function buildAdjListFromTest
+ * @param {MapTest} mapTest 
+ * @returns {AdjList}
+ */
+function buildAdjListFromTest(mapTest) {
+	/** @type {AdjList} */
+	const map = []
+	for (let i = 0; i < mapTest.mapTypes.length; i++) {
+		for (let j = 0; j < mapTest.mapTypes[i].length; j++) {
+			const pos = i * mapTest.mapTypes[i].length + j
+			map[pos] = []
+
+			if (mapTest.mapTypes[i][j] == TileType.FLOOR) {
+				if (i > 0 && mapTest.mapTypes[i - 1][j] != TileType.HOLE) {
+					const posJ = (i - 1) * mapTest.mapTypes[i].length + j
+					map[pos].push(posJ)
+				}
+
+				if (i < mapTest.mapTypes.length - 1 && mapTest.mapTypes[i + 1][j] != TileType.HOLE) {
+					const posJ = (i + 1) * mapTest.mapTypes[i].length + j
+					map[pos].push(posJ)
+				}
+
+				if (j > 0 && mapTest.mapTypes[i][j - 1] != TileType.HOLE) {
+					const posJ = i * mapTest.mapTypes[i].length + j - 1
+					map[pos].push(posJ)
+				}
+
+				if (j < mapTest.mapTypes[i].length - 1 && mapTest.mapTypes[i][j + 1] != TileType.HOLE) {
+					const posJ = i * mapTest.mapTypes[i].length + j + 1
+					map[pos].push(posJ)
+				}
+			}
+
+		}
+	}
+	return map
+}
+
 module.exports = {
-	buildMapMatrixFromTest
+	buildMapMatrixFromTest,
+	buildAdjListFromTest
 }
