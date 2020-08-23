@@ -12,8 +12,12 @@
 <br/><br/>
 <button onclick="solveORTools()">OR-Tools</button>
 <button onclick="solveLPSolver()">LP Solver</button>
-<button onclick="solveGreedy()">Greedy</button>
 <button onclick="solveGLPK()">GLPK</button>
+<br/><br/>
+<button onclick="solveGreedy()">Greedy</button>
+<button onclick="solveRandomGreedy(1)">Random Greedy</button>
+<button onclick="solveRandomGreedy(100)">Random Greedy x100</button>
+<button onclick="solveRandomGreedy(1000)">Random Greedy x1000</button>
 <pre id="output"></pre>
 
 <script src="lib/javascript-lp-solver.js"></script>
@@ -24,6 +28,7 @@
 <script src="solveLPSolver.js"></script>
 <script src="solveGreedy.js"></script>
 <script src="solveGLPK.js"></script>
+<script src="solveRandomGreedy.js"></script>
 
 <script>
   const input = document.querySelector('#input')
