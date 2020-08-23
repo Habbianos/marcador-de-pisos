@@ -6,8 +6,8 @@ const {exec} = require('child_process')
 
 const port = process.argv[2] || 9000
 const app = express()
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false, limit: '50mb', parameterLimit:50000}))
+app.use(bodyParser.json({limit: '50mb'}))
 app.use(express.static(`${__dirname}/../public`))
 
 const server = app.listen(port, () => {
