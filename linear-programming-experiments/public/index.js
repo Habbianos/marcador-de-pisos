@@ -4,12 +4,9 @@ const output = document.querySelector('#output')
 input.value = '◫◪◫◫◫\n◫◫▩◪◫'
 
 function getAdjListFromInput() {
-  const inputValue = input.value.split('\n')
+  const matrix = input.value.split('\n')
     .map(s => s.replace(/\s/g, ''))
     .filter(s => s != '')
-  let matrix = inputValue
-  if (inputValue[0][0] == '[') // if the input string is in array of chars format
-    matrix = JSON.parse(inputValue.join(''))
   return {
     adjList: buildAdjListFromTest({
       mapTypes: matrix
