@@ -19,9 +19,11 @@ function paint(source, selected) {
 		}
 	}
 
+	const wantShowCoverage = document.querySelector('#showCoverage').checked
+
 	// In the states matrix, mark the covered (state 1 or 3) or isolated (state 4) elements
 
-	for (let i = 0; i < states.length; i++) {
+	for (let i = 0; wantShowCoverage && i < states.length; i++) {
 		for (let j = 0; j < states[i].length; j++) {
 			if (states[i][j] == 2 || states[i][j] == 3) {
 				if (typeof states[i - 1] != "undefined" && typeof states[i - 1][j] != "undefined" && source[i - 1][j] == '◫') {
