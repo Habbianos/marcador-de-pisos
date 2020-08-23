@@ -3,10 +3,16 @@ const output = document.querySelector('#output')
 
 input.value = '◫◪◫◫◫\n◫◫▩◪◫'
 
-function getAdjListFromInput() {
-  const matrix = input.value.split('\n')
+function parseInput() {
+  let matrix = input.value.split('\n')
     .map(s => s.replace(/\s/g, ''))
     .filter(s => s != '')
+  const maxLen = matrix.reduce((acc, line) => Math.max(acc, line.length) , 0)
+  return matrix.map(row => row + '▩'.repeat(maxLen - row.length))
+}
+
+function getAdjListFromInput() {
+  const matrix = parseInput()
   return {
     adjList: buildAdjListFromTest({
       mapTypes: matrix
@@ -23,10 +29,7 @@ function chunk(list, n) {
 
 function arrayToStringMatrix(v, n) {
   const r = chunk(v, n)
-  const s = input.value.split('\n')
-    .map(s => s.replace(/\s/g, ''))
-    .filter(s => s != '')
-    .map(s => s.split(""))
+  const s = parseInput().map(s => s.split(""))
   return paint(s, r)
 }
 
