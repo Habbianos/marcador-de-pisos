@@ -18,7 +18,7 @@ function getAdjListFromInput() {
 function chunk(list, n) {
   return Array(Math.ceil(list.length / n))
     .fill()
-    .map((_, i) => list.slice(i * n, i * n + n));
+    .map((_, i) => list.slice(i * n, i * n + n))
 }
 
 function arrayToStringMatrix(v, n) {
