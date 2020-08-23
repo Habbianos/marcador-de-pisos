@@ -29,9 +29,9 @@ function solveLPSolver() {
   worker.onmessage = res => {
     const {data} = res
     updateOutput(`
-      Feasible: ${data.feasible}
       Result: ${data.result}
       Time: ${performance.now() - start} ms
+      Feasible: ${data.feasible}
       Bounded: ${data.bounded}
       Is integral: ${data.isIntegral}
       Solution:

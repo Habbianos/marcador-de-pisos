@@ -12,15 +12,13 @@ function solveORTools() {
   .then(res => res.json())
   .then(data => {
     console.log(data)
-    let {success, numVariables, numConstraints, time, iterations, branchAndBoundNodes, objectiveValue, solution} = data
+    let {success, numVariables, numConstraints, time, objectiveValue, solution} = data
     updateOutput(`
-      Success: ${success}
-      Objective value: ${objectiveValue}
+      Result: ${objectiveValue}
       Time: ${time} ms
+      Success: ${success}
       Variables: ${numVariables}
       Constraints: ${numConstraints}
-      Iterations: ${iterations}
-      Branch and Bound nodes: ${branchAndBoundNodes}
       Solution: 
       ${arrayToStringMatrix(solution, n)}
     `)
