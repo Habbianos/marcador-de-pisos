@@ -1,81 +1,39 @@
-<style>
-  textarea {
-    width: 100%;
-    height: 45%;
-  }
-  * {
-    font-size: 20;
-    line-height: 1em;
-  }
-</style>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Programming Experiments</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 
-<textarea id="input"></textarea>
-<br/><br/>
-<button onclick="solveCBC()">CBC (OR-Tools)</button>
-<button onclick="solveLPSolver()">LP Solver</button>
-<button onclick="solveGLPK()">GLPK</button>
-<button onclick="solveCP_SAT()">CP-SAT (OR-Tools)</button>
-<br/><br/>
-<button onclick="solveGreedy()">Greedy</button>
-<button onclick="solveRandomGreedy(1)">Random Greedy</button>
-<button onclick="solveRandomGreedy(100)">Random Greedy x100</button>
-<button onclick="solveRandomGreedy(1000)">Random Greedy x1000</button>
-<br />
-<label><input type="checkbox" id="showCoverage"> Show coverage</label>
-<pre id="output"></pre>
+    <script src="lib/javascript-lp-solver.js"></script>
+    <script src="lib/glpk.min.js"></script>
 
-<script src="lib/javascript-lp-solver.js"></script>
-<script src="lib/glpk.min.js"></script>
+    <script src="mapManager.js"></script>
+    <script src="paintResult.js"></script>
+    <script src="solveCBC.js"></script>
+    <script src="solveLPSolver.js"></script>
+    <script src="solveGreedy.js"></script>
+    <script src="solveGLPK.js"></script>
+    <script src="solveCP-SAT.js"></script>
+    <script src="solveRandomGreedy.js"></script>
+  </head>
 
-<script src="mapManager.js"></script>
-<script src="paintResult.js"></script>
-<script src="solveCBC.js"></script>
-<script src="solveLPSolver.js"></script>
-<script src="solveGreedy.js"></script>
-<script src="solveGLPK.js"></script>
-<script src="solveCP-SAT.js"></script>
-<script src="solveRandomGreedy.js"></script>
+  <body>
+    <textarea id="input"></textarea>
+    <br/><br/>
+    <button onclick="solveCBC()">CBC (OR-Tools)</button>
+    <button onclick="solveGLPK()">GLPK</button>
+    <button onclick="solveLPSolver()">LP Solver</button>
+    <button onclick="solveCP_SAT()">CP-SAT (OR-Tools)</button>
+    <br/><br/>
+    <button onclick="solveGreedy()">Greedy</button>
+    <button onclick="solveRandomGreedy(1)">Random Greedy</button>
+    <button onclick="solveRandomGreedy(100)">Random Greedy x100</button>
+    <button onclick="solveRandomGreedy(1000)">Random Greedy x1000</button>
+    <br />
+    <label><input type="checkbox" id="showCoverage"> Show coverage</label>
+    <pre id="output"></pre>
+  </body>
 
-<script>
-  const input = document.querySelector('#input')
-  const output = document.querySelector('#output')
-
-  input.value = '◫◪◫◫◫\n◫◫▩◪◫'
-
-  function getAdjListFromInput() {
-    const inputValue = input.value.split('\n')
-      .map(s => s.replace(/\s/g, ''))
-      .filter(s => s != '')
-    let matrix = inputValue
-    if(inputValue[0][0] == '[') // if the input string is in array of chars format
-      matrix = JSON.parse(inputValue.join(''))
-    return {
-      adjList: buildAdjListFromTest({mapTypes: matrix}),
-      n: matrix[0].length
-    }
-  }
-
-  function chunk(list, n) {
-    return Array(Math.ceil(list.length / n))
-      .fill()
-      .map((_, i) => list.slice(i * n, i * n + n));
-  }
-
-  function arrayToStringMatrix(v, n) {
-    const r = chunk(v, n)
-    const s = input.value.split('\n')
-      .map(s => s.replace(/\s/g, ''))
-      .filter(s => s != '')
-      .map(s => s.split(""))
-    return paint(s, r)
-  }
-
-  function clearOutput() {
-    output.textContent = ''
-  }
-
-  function updateOutput(newContent) {
-    output.innerHTML = newContent.replace(/^\s+|\s+$/gm, '')
-  }
-
-</script>
+  <script src="index.js"></script>
+</html>
