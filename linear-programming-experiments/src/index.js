@@ -29,6 +29,21 @@ app.post('/solveCBC', (req, res) => {
   })
 })
 
+app.post('/solveCP-SAT', (req, res) => {
+  const {adjList} = req.body
+  const file = 'adjList.txt'
+  const python = os.platform() == 'win32' ? 'py' : 'python3'
+  fs.writeFileSync(file, JSON.stringify(adjList))
+  exec(`${python} solveCP-SAT.py ${file}`, (err, stdout) => {
+    if(err) {
+      console.log(err)
+      res.send(null)
+      return
+    }
+    res.send(stdout)
+  })
+})
+
 app.put('/stopServer', (req, res) => {
   res.end('Stopping server :(\n')
   server.close()

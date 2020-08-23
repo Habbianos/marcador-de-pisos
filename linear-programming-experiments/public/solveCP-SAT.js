@@ -1,8 +1,8 @@
-function solveCBC() {
+function solveCP_SAT() {
   const {adjList, n} = getAdjListFromInput()
   clearOutput()
-  console.log(`FETCH /solveCBC`)
-  fetch('/solveCBC', {
+  console.log(`FETCH /solveCP-SAT`)
+  fetch('/solveCP-SAT', {
     method: 'post',
     headers: {
       "Content-type": "application/json; charset=UTF-8"
@@ -16,9 +16,6 @@ function solveCBC() {
     updateOutput(`
       Result: ${objectiveValue}
       Time: ${time} ms
-      Success: ${success}
-      Variables: ${numVariables}
-      Constraints: ${numConstraints}
       Solution: 
       ${arrayToStringMatrix(solution, n)}
     `)
