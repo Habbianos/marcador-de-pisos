@@ -5,6 +5,7 @@
   }
   * {
     font-size: 20;
+    line-height: 1em;
   }
 </style>
 
@@ -25,6 +26,7 @@
 <script src="lib/glpk.min.js"></script>
 
 <script src="mapManager.js"></script>
+<script src="paintResult.js"></script>
 <script src="solveCBC.js"></script>
 <script src="solveLPSolver.js"></script>
 <script src="solveGreedy.js"></script>
@@ -51,16 +53,19 @@
     }
   }
 
+  function chunk(list, n) {
+    return Array(Math.ceil(list.length / n))
+      .fill()
+      .map((_, i) => list.slice(i * n, i * n + n));
+  }
+
   function arrayToStringMatrix(v, n) {
-    let res = '', row = []
-    for(let i = 0; i < v.length; i++) {
-      row.push(v[i])
-      if((i+1) % n == 0) {
-        res += `${JSON.stringify(row)}\n`
-        row = []
-      }
-    }
-    return res
+    const r = chunk(v, n)
+    const s = input.value.split('\n')
+      .map(s => s.replace(/\s/g, ''))
+      .filter(s => s != '')
+      .map(s => s.split(""))
+    return paint(s, r)
   }
 
   function clearOutput() {
@@ -68,7 +73,7 @@
   }
 
   function updateOutput(newContent) {
-    output.textContent = newContent.replace(/^\s+|\s+$/gm, '')
+    output.innerHTML = newContent.replace(/^\s+|\s+$/gm, '')
   }
 
 </script>
