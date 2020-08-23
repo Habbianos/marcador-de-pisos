@@ -14,18 +14,17 @@ const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`)
 })
 
-app.post('/solve', (req, res) => {
+app.post('/solveCBC', (req, res) => {
   const {adjList} = req.body
   const file = 'adjList.txt'
   const python = os.platform() == 'win32' ? 'py' : 'python3'
   fs.writeFileSync(file, JSON.stringify(adjList))
-  exec(`${python} solve.py ${file}`, (err, stdout) => {
+  exec(`${python} solveCBC.py ${file}`, (err, stdout) => {
     if(err) {
       console.log(err)
       res.send(null)
       return
     }
-    // console.log(stdout)
     res.send(stdout)
   })
 })

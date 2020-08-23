@@ -1,8 +1,8 @@
-function solveORTools() {
+function solveCBC() {
   const {adjList, n} = getAdjListFromInput()
   clearOutput()
   console.log(`FETCH /solve`)
-  fetch('/solve', {
+  fetch('/solveCBC', {
     method: 'post',
     headers: {
       "Content-type": "application/json; charset=UTF-8"
