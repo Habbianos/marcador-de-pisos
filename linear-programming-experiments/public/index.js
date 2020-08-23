@@ -4,7 +4,7 @@ const output = document.querySelector('#output')
 input.value = '◫◪◫◫◫\n◫◫▩◪◫'
 
 function parseInput() {
-  let matrix = input.value.split('\n')
+  const matrix = input.value.split('\n')
     .map(s => s.replace(/\s/g, ''))
     .filter(s => s != '')
   const maxLen = matrix.reduce((acc, line) => Math.max(acc, line.length) , 0)
